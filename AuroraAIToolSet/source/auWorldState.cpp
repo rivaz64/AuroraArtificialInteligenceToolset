@@ -1,8 +1,6 @@
-#include "oaWorldState.h"
+#include "auWorldState.h"
 
-namespace oaEngineSDK{
-
-
+namespace auToolSeetSDK{
 
 void 
 WorldState::defineCondicion(uint32 condicion)
@@ -40,7 +38,8 @@ uint32
 WorldState::getNumOfDiferences(const WorldState& other)
 {
 
-  uint32 diferences = (~(other.m_wordlStateFlags^m_wordlStateFlags))&(m_flagMask);
+  uint32 diferences = (~(other.m_wordlStateFlags^m_wordlStateFlags))&
+                      (other.m_flagMask&m_flagMask);
   uint32 numOfDiferences = 0;
 
   for(SIZE_T i = 0; i<32; ++i){

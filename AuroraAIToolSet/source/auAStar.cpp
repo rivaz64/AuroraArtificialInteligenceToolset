@@ -1,7 +1,7 @@
-#include "oaAStar.h"
-#include "oaAStarGraph.h"
+#include "auAStar.h"
+#include "auAStarGraph.h"
 
-namespace oaEngineSDK{
+namespace auToolSeetSDK{
 
 uint32 
 AStar::getNextNodeForSearch(){

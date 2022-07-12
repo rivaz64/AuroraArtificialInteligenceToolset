@@ -22,8 +22,11 @@ class AStarGraph
    * @param nodeId the id of node to which they are adjacent
    * @return the ids of the adjacent nodes
   */
-  virtual const Vector<uint32>&
-  getAdjacentNodes(uint32 nodeId);
+  virtual Vector<uint32>
+  getAdjacentNodes(uint32 nodeId)
+  {
+    return {};
+  }
 
   /**
    * @brief gets the distance between 2 nodes

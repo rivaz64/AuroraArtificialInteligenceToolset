@@ -1,0 +1,13 @@
+﻿  auAction.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auAction.cpp(1,10): fatal error C1083: Cannot open include file: 'oaAction.h': No such file or directory
+  auAStar.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auAStar.cpp(1,10): fatal error C1083: Cannot open include file: 'oaAStar.h': No such file or directory
+  auAStarGraph.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auAStarGraph.cpp(1,10): fatal error C1083: Cannot open include file: 'oaAStarGraph.h': No such file or directory
+  auAStarNode.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auAStarNode.cpp(1,10): fatal error C1083: Cannot open include file: 'oaAStarNode.h': No such file or directory
+  auPlansGraph.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(1,10): fatal error C1083: Cannot open include file: 'oaPlansGraph.h': No such file or directory
+  auWorldState.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auWorldState.cpp(1,10): fatal error C1083: Cannot open include file: 'oaWorldState.h': No such file or directory
+  Generating Code...

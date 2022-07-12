@@ -18,6 +18,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <functional>
 #include "auDefines.h"
 
 namespace auToolSeetSDK {
@@ -43,7 +44,7 @@ using std::copy;
 using std::cout;
 using std::to_string;
 using std::find;
-
+using std::function;
 
 
 /**
@@ -149,6 +150,9 @@ copy(const SPtr<T>& pointer){
 */
 template<typename T>
 using SharedEnabled = enable_shared_from_this<T>;
+
+template <typename T>
+using Function = function<T>;
 
 /**
  * @brief prints a string to the console
