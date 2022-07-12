@@ -29,15 +29,6 @@ class AStarGraph
   }
 
   /**
-   * @brief gets the distance between 2 nodes
-   * @param nodeId1 the distance of the first node
-   * @param nodeId2 the distance of the second node
-   * @return the distance
-  */
-  virtual float
-  getDistance(uint32 nodeId1, uint32 nodeId2);
-
-  /**
    * @brief gets the cost of going from node1 to node2
    * @param nodeId1 the distance of the first node
    * @param nodeId2 the distance of the second node
@@ -45,6 +36,15 @@ class AStarGraph
   */
   virtual float
   getCost(uint32 nodeId1, uint32 nodeId2);
+
+  /**
+   * @brief gets the distance between 2 nodes
+   * @param nodeId1 the distance of the first node
+   * @param nodeId2 the distance of the second node
+   * @return the distance
+  */
+  virtual float
+  getHeuristicDistance(WPtr<AStarNode> nodeId);
 
  private:
 

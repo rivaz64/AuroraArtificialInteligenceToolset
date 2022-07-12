@@ -25,6 +25,12 @@ class PlansGraph :
   Vector<uint32>
   getAdjacentNodes(uint32 nodeId) override;
 
+  float
+  getCost(uint32 nodeId1, uint32 nodeId2) override;
+
+  float
+  getHeuristicDistance(uint32 nodeId) override;
+
  private:
 
   /**

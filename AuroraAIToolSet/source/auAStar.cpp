@@ -25,7 +25,7 @@ void
 AStar::addNode(uint32 newId, uint32 parentId)
 {
   m_nodes.emplace(pair<uint32,AStarNode>(newId,
-  AStarNode(m_graph->getDistance(newId,m_goalId),m_graph->getCost(newId,m_sourceId))));
+  AStarNode(m_graph->getHeuristicDistance(m_nodes[newId]),m_graph->getCost(newId,m_sourceId))));
   addNodeToOpenList(newId);
 }
 
@@ -43,7 +43,7 @@ AStar::addNodeToOpenList(uint32 newId)
 bool 
 AStar::isBetterPath(uint32 nodeId, uint32 newParentId)
 {
-  float actualEuristic = m_nodes[nodeId].heuristic;
+  float actualEuristic = m_graph->getHeuristicDistance(m_nodes[nodeId]);
   float newEuristic = m_graph->getCost(nodeId,m_sourceId) + m_nodes[newParentId].heuristic;
   return newEuristic < actualEuristic;
 }
@@ -61,7 +61,7 @@ AStar::step()
     makePath();
     return SEARCH_STATE::kPathFinded;
   }
-  auto& adjacents = m_graph->getAdjacentNodes(nodeId);
+  auto adjacents = m_graph->getAdjacentNodes(nodeId);
   for(auto& adjacentId : adjacents){
     if(m_nodes.find(adjacentId) == m_nodes.end()){
       addNode(adjacentId,nodeId);

@@ -124,7 +124,7 @@ class AStar
   /**
    * @brief all the search Nodes
   */
-  map<uint32,AStarNode> m_nodes;
+  map<uint32,SPtr<AStarNode>> m_nodes;
 
   /**
    * @brief the paths that have been searched

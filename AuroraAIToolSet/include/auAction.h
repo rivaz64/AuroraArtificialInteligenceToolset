@@ -59,6 +59,12 @@ class Action
     return m_effects;
   }
 
+  FORCEINLINE float
+  getCost()
+  {
+    return m_cost;
+  }
+
  private:
 
   /**
@@ -70,6 +76,11 @@ class Action
    * @brief the changes that are the result of this action
   */
   WorldState m_effects;
+
+  /**
+   * @brief howmuch it costs to dothis action
+  */
+  float m_cost;
 
 
 };

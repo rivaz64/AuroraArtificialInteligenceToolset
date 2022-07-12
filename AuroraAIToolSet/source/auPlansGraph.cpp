@@ -43,5 +43,17 @@ PlansGraph::getAdjacentNodes(uint32 nodeId)
   return adjacents;
 }
 
+float 
+PlansGraph::getCost(uint32 nodeId1, uint32 nodeId2)
+{
+  return m_actions[nodeId2].getCost();
+}
+
+float 
+PlansGraph::getHeuristicDistance(uint32 nodeId)
+{
+  auto& action = m_actions[nodeId];
+
+
 }
 
