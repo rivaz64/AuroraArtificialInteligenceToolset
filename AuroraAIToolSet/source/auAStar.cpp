@@ -1,80 +1,70 @@
 #include "auAStar.h"
-#include "auAStarGraph.h"
+#include "auSearchGraph.h"
+
 
 namespace auToolSeetSDK{
 
-uint32 
-AStar::getNextNodeForSearch(){
-  uint32 id = *m_openList.begin();
-  m_openList.pop_front();
-  //m_closedList.push_back(id);
-  return id;
-}
+//void
+//AStar::addNode(uint32 newNodeId, WPtr<AStarNode> parentNode)
+//{
+//  auto newNode = makeSPtr<AStarNode>();
+//  newNode->id = newNodeId;
+//  
+//  m_graph->getCost(parentNode,newNode);
+//  m_nodes.push_back(newNode);
+//  addNodeToOpenList(newNode);
+//}
 
 void 
-AStar::makePath()
+AStar::addDataToNode(WPtr<SearchNode> wNode)
 {
-  uint32 actualId = m_goalId;
-  while(actualId != m_sourceId){
-    m_path.push_back(actualId);
-    actualId = m_paths[actualId];
-  }
+  if(wNode.expired()) return;
+  auto node = cast<AStarNode>(wNode.lock());
+  node->heuristic = m_graph->getHeuristicDistance(node);
+  node->toGoal = m_graph->getCost(node,node->parent);
 }
 
 void
-AStar::addNode(uint32 newId, uint32 parentId)
+AStar::addNodeToOpenList(WPtr<SearchNode> wNode)
 {
-  m_nodes.emplace(pair<uint32,AStarNode>(newId,
-  AStarNode(m_graph->getHeuristicDistance(m_nodes[newId]),m_graph->getCost(newId,m_sourceId))));
-  addNodeToOpenList(newId);
+  if(wNode.expired()){
+    return;
+  }
+  auto node = cast<AStarNode>(wNode.lock());
+  auto fitness = node->getFitness();
+  for(auto it = m_openList.begin(); it != m_openList.end(); ++it){
+    if(it->expired()) continue;
+    auto otherNode = cast<AStarNode>(it->lock());
+    if(fitness < otherNode->getFitness()){
+      m_openList.insert(it,wNode);
+    }
+  }
 }
 
-void 
-AStar::addNodeToOpenList(uint32 newId)
-{
-  auto fitness = m_nodes[newId].getFitness();
-  for(auto it = m_openList.begin(); it != m_openList.end(); ++it){
-    if(fitness < m_nodes[*it].getFitness()){
-      m_openList.insert(it,newId);
-    }
+void AStar::analizeNode(WPtr<SearchNode> wNode, WPtr<SearchNode> wNewParent)
+{ 
+  if(wNode.expired() || wNewParent.expired()) return;
+  auto node = cast<AStarNode>(wNode.lock());
+  auto newParent = cast<AStarNode>(wNewParent.lock());
+  if(isBetterPath(node,newParent)){
+    //auto it = find(m_openList.begin(),m_openList.end(),adjacentId);
+    //  //if(it != m_openList.end()){
+    //  //  m_openList.erase(it);
+    //  //}
   }
 }
 
 bool 
-AStar::isBetterPath(uint32 nodeId, uint32 newParentId)
+AStar::isBetterPath(WPtr<AStarNode> wNode, WPtr<AStarNode> wNewParent)
 {
-  float actualEuristic = m_graph->getHeuristicDistance(m_nodes[nodeId]);
-  float newEuristic = m_graph->getCost(nodeId,m_sourceId) + m_nodes[newParentId].heuristic;
+  if(wNode.expired() || wNewParent.expired()) return false;
+
+  auto node = wNode.lock();
+  auto newParent = wNewParent.lock();
+
+  float actualEuristic = m_graph->getHeuristicDistance(wNode);
+  float newEuristic = m_graph->getCost(newParent,node) + node->heuristic;
   return newEuristic < actualEuristic;
-}
-
-
-
-SEARCH_STATE::E 
-AStar::step()
-{
-  if(m_openList.empty()){
-    return SEARCH_STATE::kFailed;
-  }
-  auto nodeId = getNextNodeForSearch();
-  if(nodeId == m_goalId){
-    makePath();
-    return SEARCH_STATE::kPathFinded;
-  }
-  auto adjacents = m_graph->getAdjacentNodes(nodeId);
-  for(auto& adjacentId : adjacents){
-    if(m_nodes.find(adjacentId) == m_nodes.end()){
-      addNode(adjacentId,nodeId);
-    }
-    else if(isBetterPath(adjacentId,nodeId)){
-      auto it = find(m_openList.begin(),m_openList.end(),adjacentId);
-      if(it != m_openList.end()){
-        m_openList.erase(it);
-      }
-      addNodeToOpenList(adjacentId);
-    }
-  }
-  return SEARCH_STATE::kSearching;
 }
 
 }

@@ -1,5 +1,6 @@
 #include "auPlansGraph.h"
 #include "auAction.h"
+#include "auAStarNode.h"
 
 namespace auToolSeetSDK{
 
@@ -44,16 +45,25 @@ PlansGraph::getAdjacentNodes(uint32 nodeId)
 }
 
 float 
-PlansGraph::getCost(uint32 nodeId1, uint32 nodeId2)
+PlansGraph::getCost(WPtr<SearchNode> wNode1, WPtr<SearchNode> wNode2)
 {
-  return m_actions[nodeId2].getCost();
+  //if(!wNode2.expired()){
+  //  auto node = wNode2.lock();
+  //  return m_actions[node->id].getCost();
+  //}
+  //return 0;
+  
 }
 
-float 
-PlansGraph::getHeuristicDistance(uint32 nodeId)
+float
+PlansGraph::getHeuristicDistance(WPtr<SearchNode> wNode)
 {
-  auto& action = m_actions[nodeId];
-
+  //if(wNode.expired()){
+  //  return 0.0f;
+  //}
+  //auto node = wNode.lock();
+  //auto action = m_actions[node->id];
+}
 
 }
 

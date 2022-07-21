@@ -2,6 +2,21 @@
 
 namespace auToolSeetSDK{
 
+Vector<uint32> WorldState::m_flagMapping = {};
+
+uint32
+countBitsOn(uint32 flag)
+{
+  uint32 numOfBits = 0;
+  for(SIZE_T i = 0; i<32; ++i){
+    uint32 flag = 1<<i;
+    if(flag&flag){
+      ++numOfBits;
+    }
+  }
+  return numOfBits;
+}
+
 void 
 WorldState::defineCondicion(uint32 condicion)
 {
@@ -13,6 +28,13 @@ WorldState::addCondicion(uint32 condicion)
 { 
   auto flag = getFlag(condicion);
   m_flagMask |= flag;
+}
+
+bool 
+WorldState::hasCondicion(uint32 condicion)
+{
+  auto flag = getFlag(condicion);
+  return flag & m_flagMask;
 }
 
 void 
@@ -37,18 +59,24 @@ WorldState::getCondicion(uint32 condicion)
 uint32 
 WorldState::getNumOfDiferences(const WorldState& other)
 {
+  uint32 diferences = ((other.m_wordlStateFlags^m_wordlStateFlags)&
+                       (other.m_flagMask&m_flagMask))|
+                      (other.m_flagMask^m_flagMask);
 
-  uint32 diferences = (~(other.m_wordlStateFlags^m_wordlStateFlags))&
-                      (other.m_flagMask&m_flagMask);
-  uint32 numOfDiferences = 0;
+  return countBitsOn(diferences);
+}
 
-  for(SIZE_T i = 0; i<32; ++i){
-    uint32 flag = 1<<i;
-    if(flag&diferences){
-      ++numOfDiferences;
-    }
-  }
-  return numOfDiferences;
+uint32
+WorldState::getNumOfUnsatisfiedCondicion(const WorldState& other)
+{
+  uint32 unsatisfied = m_flagMask&(
+                        ~other.m_flagMask|(
+                          other.m_flagMask&(
+                            m_wordlStateFlags^other.m_wordlStateFlags
+                          )
+                        )
+                       );
+  return countBitsOn(unsatisfied);
 }
 
 uint32 
