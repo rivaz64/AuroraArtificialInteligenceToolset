@@ -21,22 +21,24 @@
   <ItemGroup>
     <ClInclude Include="include\auAction.h" />
     <ClInclude Include="include\auAStar.h" />
-    <ClInclude Include="include\auAStarGraph.h" />
-    <ClInclude Include="include\auAStarNode.h" />
+    <ClInclude Include="include\auBreadthFirstSearch.h" />
     <ClInclude Include="include\auDefines.h" />
     <ClInclude Include="include\auForDec.h" />
+    <ClInclude Include="include\auPathFinder.h" />
     <ClInclude Include="include\auPlansGraph.h" />
     <ClInclude Include="include\auPlatformTypes.h" />
     <ClInclude Include="include\auPrerequisites.h" />
+    <ClInclude Include="include\auSearchGraph.h" />
     <ClInclude Include="include\auSTDHeaders.h" />
     <ClInclude Include="include\auWorldState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\auAction.cpp" />
-    <ClCompile Include="source\auAStar.cpp" />
     <ClCompile Include="source\auAStarGraph.cpp" />
-    <ClCompile Include="source\auAStarNode.cpp" />
+    <ClCompile Include="source\auBreadthFirstSearch.cpp" />
+    <ClCompile Include="source\auPathFinder.cpp" />
     <ClCompile Include="source\auPlansGraph.cpp" />
+    <ClCompile Include="source\auSearchGraph.cpp" />
     <ClCompile Include="source\auWorldState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -61,7 +63,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -135,7 +137,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;AU_UTILITY_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

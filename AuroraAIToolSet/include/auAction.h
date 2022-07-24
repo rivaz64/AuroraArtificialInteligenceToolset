@@ -11,7 +11,7 @@
 
 namespace auToolSeetSDK{
 
-class Action
+class AU_UTILITY_EXPORT Action
 {
  public:
   
@@ -19,8 +19,42 @@ class Action
    * @brief sets the precondicions to a world state 
    * @param ws 
   */
+  FORCEINLINE void
+  setPrecondicions(WorldState& ws)
+  {
+    m_preconditions = ws;
+  }
+
+  FORCEINLINE void
+  setEffects(WorldState& ws)
+  {
+    m_effects = ws;
+  }
+
+  /**
+   * @brief si esta accoon va a resolver cualquiera de las condiciones
+   * @param currentWS 
+   * @param goalWS 
+   * @return 
+  */
+  bool
+  canSolvePlan(WorldState& currentWS, WorldState& goalWS);
+
+  /**
+   * @brief solves a world state to how it would be before executing the action
+   * @param currentWS 
+   * @param goalWS 
+  */
   void
-  setPrecondicions(WorldState& ws);
+  solvePlanWSVariable(WorldState& currentWS, WorldState& goalWS);
+
+  /**
+   * @brief 
+   * @param currentWS 
+   * @param goalWS 
+  */
+  void
+  setPlanWSPrecondicions(WorldState& goalWS);
 
   /**
    * @brief initializes the action at the begining 

@@ -10,10 +10,54 @@
 
 namespace auToolSeetSDK{
 
-class WorldState
+namespace WORLD_PROP_TYPE{
+enum E
+{
+  kNone = 0,
+  kBool,
+  kInt,
+  kFloat
+};
+}
+
+namespace WORLD_PROP_KEY{
+enum E
+{
+  kNone = 0
+};
+}
+
+struct WorldProperty
+{
+  /**
+   * @brief what this property represents
+  */
+  WORLD_PROP_KEY::E key;
+
+  /**
+   * @brief the type of this property
+  */
+  WORLD_PROP_TYPE::E type;
+
+  /**
+   * @brief the actual value of this property
+  */
+  union value
+  {
+    bool bValue;
+    int iValue;
+    float fValue;
+
+  };
+};
+
+class AU_UTILITY_EXPORT WorldState
 {
  public:
 
+  WorldState() = default;
+
+  WorldState(Vector<Pair<uint32,bool>>&& properties);
   /**
    * @brief defines a condicion of the world
    * @param condicion 
@@ -27,6 +71,14 @@ class WorldState
   */
   void
   addCondicion(uint32 condicion);
+
+  /**
+   * @brief checks if this world state considers this condicion
+   * @param condicion 
+   * @return 
+  */
+  bool
+  hasCondicion(uint32 condicion);
 
   /**
    * @brief set a condicion as true or false
@@ -52,34 +104,69 @@ class WorldState
   uint32 
   getNumOfDiferences(const WorldState& other);
 
- private:
+  uint32 
+  getNumOfUnsatisfiedCondicion(const WorldState& other);
+
+  FORCEINLINE uint32
+  getMask()
+  {
+    return m_flagMask;
+  }
+  
+  FORCEINLINE uint32
+  getFlags()
+  {
+    return m_wordlStateFlags;
+  }
 
   /**
    * @brief gets the flag from the user defined
    * @param userFlag 
    * @return 
   */
-  uint32
+  static uint32
   getFlag(uint32 userFlag);
 
+  FORCEINLINE void
+  setMask(uint32 flagMask)
+  {
+    m_flagMask = flagMask;
+  }
 
+  FORCEINLINE void
+  setWorldState(uint32 wordlState)
+  {
+    m_wordlStateFlags = wordlState;
+  }
+
+  FORCEINLINE uint32
+  getWorldState()
+  {
+    return m_wordlStateFlags;
+  }
+
+  static Vector<uint32> m_flagMapping;
+
+ private:
 
   /**
    * @brief pams the flag with user flags
    * first is the user flag
    * second is the world state flag 
   */
-  static Vector<uint32> m_flagMapping;
+  
 
   /**
    * @brief the condicions to concider in this world state
   */
-  uint32 m_flagMask;
+  uint32 m_flagMask = 0;
 
   /**
    * @brief the condicions in the world that can be true or not
   */
   uint32 m_wordlStateFlags;
+
+  friend class Action;
 };
 
 }

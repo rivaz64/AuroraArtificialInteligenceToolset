@@ -6,12 +6,12 @@
 
 #pragma once
 
-#include "auAStarGraph.h"
+#include "auSearchGraph.h"
 
 namespace auToolSeetSDK{
 
-class PlansGraph :
-  public AStarGraph
+class AU_UTILITY_EXPORT PlansGraph :
+  public SearchGraph
 {
  public:
   
@@ -26,10 +26,10 @@ class PlansGraph :
   getAdjacentNodes(uint32 nodeId) override;
 
   float
-  getCost(uint32 nodeId1, uint32 nodeId2) override;
+  getCost(WPtr<SearchNode> node1, WPtr<SearchNode> node2) override;
 
   float
-  getHeuristicDistance(uint32 nodeId) override;
+  getHeuristicDistance(WPtr<SearchNode> node) override;
 
  private:
 

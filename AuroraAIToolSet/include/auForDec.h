@@ -9,8 +9,11 @@
 namespace auToolSeetSDK{
 class Action;
 class AStar;
-class AStarGraph;
+class SearchGraph;
 struct AStarNode;
+struct SearchNode;
+class PathFinder;
 class PlansGraph;
+struct WorldProperty;
 class WorldState;
 }

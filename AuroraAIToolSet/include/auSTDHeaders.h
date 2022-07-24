@@ -163,4 +163,14 @@ print(String s){
   cout<<s<<endl;
 }
 
+/**
+* @brief wraper of the std::make_shared
+* @tparam T
+*/
+template <typename T, typename... _Types>
+FORCEINLINE SPtr<T> 
+makeSPtr(_Types&&... _Args) {
+  return make_shared<T>(std::forward<_Types>(_Args)...);
+}
+
 }

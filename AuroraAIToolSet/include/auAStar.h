@@ -7,160 +7,68 @@
 #pragma once
 
 #include "auPrerequisites.h"
-#include "auAStarNode.h"
+#include "auPathFinder.h"
 
 namespace auToolSeetSDK{
+/**
+ * @brief node used for building the graph used for AStar search;
+*/
+struct AStarNode :
+  public SearchNode
+{
+ public:
+ 
+  AStarNode() = default;
+  //AStarNode(float _toGoal, float _heuristic) :
+  // toGoal(_toGoal), heuristic(_heuristic) {}
 
-namespace SEARCH_STATE{
-enum E{
-kFailed = 0,
-kSearching,
-kPathFinded 
+  FORCEINLINE float
+  getFitness(){
+    return toGoal+heuristic;
+  }
+
+  /**
+   * @brief the distance from this node to the goal
+  */
+  float toGoal;
+
+  /**
+   * @brief the cost from the source to this node
+  */
+  float heuristic;
 };
-}
+
 
 /**
  * @brief class for doing aStar searches
 */
-class AStar
+class AStar :
+  public PathFinder
 {
  public:
 
-  /**
-   * @brief executes a step of the search.
-   * @return the state of the search at the end of the state
-  */
-  SEARCH_STATE::E 
-  step();
+ protected:
 
-  /**
-   * @brief 
-   * @param  
-  */
-  FORCEINLINE void
-  run()
-  {
-    reset();
-    while(step() != SEARCH_STATE::kSearching);
-  }
-
-  /**
-   * @brief sets the node for the start of the search
-  */
-  FORCEINLINE void
-  setSourceId(uint32 sourceId)
-  {
-    m_sourceId = sourceId;
-  }
-
-  /**
-   * @brief sets the node that is the goal of the search
-  */
-  FORCEINLINE void
-  setGoalId(uint32 goalId)
-  {
-    m_goalId = goalId;
-  }
-
-  /**
-   * @brief clears the data and prepares it for a new search
-  */
-  FORCEINLINE void
-  reset()
-  {
-    m_openList.clear();
-    m_nodes.clear();
-    m_paths.clear();
-    m_path.clear();
-    addNode(m_sourceId,-1);
-    m_openList.push_back(m_sourceId);
-  }
-
-  FORCEINLINE Vector<uint32>
-  getPath()
-  {
-    return m_path;
-  }
-
-  FORCEINLINE void
-  setGraph(SPtr<AStarGraph> graph)
-  {
-    m_graph = graph;
-  }
-
- private:
-
-  /**
-   * @brief gets the id of the node for doing the search
-   * @return 
-  */
-  uint32 
-  getNextNodeForSearch();
-
-  /**
-   * @brief after geting to the end it finds the path backwards
-   * @param id 
-  */
   void
-  makePath();
-
-  /**
-   * @brief adds a node to the search
-   * @param nodeId tthe node to be added
-  */
-  void 
-  addNode(uint32 newId, uint32 parentId);
-
-  /**
-   * @brief adds the node to the open list
-   * @param newId the id of the node to add
-  */
-  void
-  addNodeToOpenList(uint32 newId);
+  addDataToNode(WPtr<SearchNode> node) override;
 
   bool
-  isBetterPath(uint32 nodeId, uint32 newParentId);
+  isBetterPath(WPtr<AStarNode> node, WPtr<AStarNode> newParent);
 
-  /**
-   * @brief all the search Nodes
-  */
-  map<uint32,SPtr<AStarNode>> m_nodes;
+  void
+  addNodeToOpenList(WPtr<SearchNode> node) override;
+
+  void
+  analizeNode(WPtr<SearchNode> node, WPtr<SearchNode> newParent) override;
 
   /**
    * @brief the paths that have been searched
   */
   //Vector<uint32> m_closedList;
 
-  /**
-   * @brief the paths in wait for search
-  */
-  List<uint32> m_openList;
+  
 
-  /**
-   * @brief the graph with all the paths
-   * keys are the nodes and values are the parents
-  */
-  Map<uint32,uint32> m_paths;
-
-  /**
-   * @brief the path of id nodes
-  */
-  Vector<uint32> m_path;
-
-  /**
-   * @brief from where to start the search
-  */
-  uint32 m_sourceId;
-
-  /**
-   * @brief where the search has to end
-  */
-  uint32 m_goalId;
-
-  /**
-   * @brief the graph to do the search in
-  */
-  SPtr<AStarGraph> m_graph;
+  
 };
 
 }
