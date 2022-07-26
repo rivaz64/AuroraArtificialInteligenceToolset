@@ -59,6 +59,12 @@ class AU_UTILITY_EXPORT WorldState
 
   WorldState(Vector<Pair<uint32,bool>>&& properties);
 
+  FORCEINLINE bool 
+  operator==(const WorldState& other) const
+  {
+    return getNumOfDiferences(other) == 0;
+  }
+
   /**
    * @brief defines a condicion of the world
    * @param condicion 
@@ -105,7 +111,7 @@ class AU_UTILITY_EXPORT WorldState
    * @return 
   */
   uint32 
-  getNumOfDiferences(const WorldState& other);
+  getNumOfDiferences(const WorldState& other) const;
 
   /**
    * @brief the number of condicions of this state cares about that are satisfied in the 
@@ -127,13 +133,7 @@ class AU_UTILITY_EXPORT WorldState
   FORCEINLINE uint32
   getMask()
   {
-    return m_flagMask;
-  }
-  
-  FORCEINLINE uint32
-  getFlags()
-  {
-    return m_wordlStateFlags;
+    return m_mask;
   }
 
   /**
@@ -147,19 +147,19 @@ class AU_UTILITY_EXPORT WorldState
   FORCEINLINE void
   setMask(uint32 flagMask)
   {
-    m_flagMask = flagMask;
+    m_mask = flagMask;
   }
 
   FORCEINLINE void
-  setWorldState(uint32 wordlState)
+  setCondicions(uint32 condicions)
   {
-    m_wordlStateFlags = wordlState;
+    m_condicions = condicions;
   }
 
   FORCEINLINE uint32
-  getWorldState()
+  getCondicions()
   {
-    return m_wordlStateFlags;
+    return m_condicions;
   }
 
   static Vector<uint32> m_flagMapping;
@@ -176,12 +176,12 @@ class AU_UTILITY_EXPORT WorldState
   /**
    * @brief the condicions to concider in this world state
   */
-  uint32 m_flagMask = 0;
+  uint32 m_mask = 0;
 
   /**
    * @brief the condicions in the world that can be true or not
   */
-  uint32 m_wordlStateFlags;
+  uint32 m_condicions;
 
   friend class Action;
 };

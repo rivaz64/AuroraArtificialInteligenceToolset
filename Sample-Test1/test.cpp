@@ -34,8 +34,13 @@ int main(int argc, char** argv)
 class WorldStateTest : public ::testing::Test
 {
   protected:
-    // Objects declared here can be used by all tests in the test case for this component.
     WorldState ws;
+};
+
+class ActionTest : public ::testing::Test
+{
+  protected:
+    Action act;
 };
 
 TEST_F(WorldStateTest, same) {
@@ -93,10 +98,72 @@ TEST_F(WorldStateTest, someMattersDifferentValues) {
     goal.setCondicion(MY_CONDICIONS::IS_COVERED,false);
 
     ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
-    ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+    ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
 
     ASSERT_EQ(ws.getNumOfUnsatisfiedCondicion(goal),1);
 }
+
+TEST_F(ActionTest, canDoAction) {
+  act.setPrecondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  act.setPrecondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  WorldState ws;
+  ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+  ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+  ws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  ASSERT_TRUE(act.validatePrecondicions(ws));
+}
+
+TEST_F(ActionTest, cantDoAction) {
+  act.setPrecondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  act.setPrecondicion(MY_CONDICIONS::IS_COVERED,true);
+
+  WorldState ws;
+  ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+  ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+  ws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  ASSERT_FALSE(act.validatePrecondicions(ws));
+}
+
+TEST_F(ActionTest, noEffects) {
+
+  WorldState ws;
+  ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+  ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+  ws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  auto prevWS = ws;
+  act.applyEffects(ws);
+
+  ASSERT_EQ(prevWS,ws);
+}
+
+TEST_F(ActionTest, wsAfected) {
+
+  WorldState ws;
+  ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+  ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+  ws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  WorldState finalws;
+  finalws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,true);
+  finalws.setCondicion(MY_CONDICIONS::HAS_WEAPON,true);
+  finalws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+  finalws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+  act.setPrecondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+  act.setEffect(MY_CONDICIONS::ENEMY_DEAD,true);
+  act.applyEffects(ws);
+
+  ASSERT_EQ(ws,finalws);
+}
+
 
 
 

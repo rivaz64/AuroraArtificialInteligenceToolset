@@ -27,26 +27,26 @@ void
 WorldState::addCondicion(uint32 condicion)
 { 
   auto flag = getFlag(condicion);
-  m_flagMask |= flag;
+  m_mask |= flag;
 }
 
 bool 
 WorldState::hasCondicion(uint32 condicion)
 {
   auto flag = getFlag(condicion);
-  return flag & m_flagMask;
+  return flag & m_mask;
 }
 
 void 
 WorldState::setCondicion(uint32 condicion, bool isTrue)
 {
   auto flag = getFlag(condicion);
-  m_flagMask |= flag;
+  m_mask |= flag;
   if(isTrue){
-    m_wordlStateFlags |= flag;
+    m_condicions |= flag;
   }
   else{
-    m_wordlStateFlags = (m_wordlStateFlags^flag)&(~flag);
+    m_condicions = (m_condicions^flag)&(~flag);
   }
 }
 
@@ -54,15 +54,15 @@ bool
 WorldState::getCondicion(uint32 condicion)
 {
   auto flag = getFlag(condicion);
-  return flag&m_wordlStateFlags;
+  return flag&m_condicions;
 }
 
 uint32 
-WorldState::getNumOfDiferences(const WorldState& other)
+WorldState::getNumOfDiferences(const WorldState& other) const
 {
-  uint32 diferences = ((other.m_wordlStateFlags^m_wordlStateFlags)&
-                       (other.m_flagMask&m_flagMask))|
-                      (other.m_flagMask^m_flagMask);
+  uint32 diferences = ((other.m_condicions^m_condicions)&
+                       (other.m_mask&m_mask))|
+                      (other.m_mask^m_mask);
 
   return countBitsOn(diferences);
 }
@@ -70,10 +70,10 @@ WorldState::getNumOfDiferences(const WorldState& other)
 uint32
 WorldState::getNumOfUnsatisfiedCondicion(const WorldState& other)
 {
-  uint32 unsatisfied = m_flagMask&(
-                        ~other.m_flagMask|(
-                          other.m_flagMask&(
-                            m_wordlStateFlags^other.m_wordlStateFlags
+  uint32 unsatisfied = m_mask&(
+                        ~other.m_mask|(
+                          other.m_mask&(
+                            m_condicions^other.m_condicions
                           )
                         )
                        );

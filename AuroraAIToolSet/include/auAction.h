@@ -32,18 +32,32 @@ class AU_UTILITY_EXPORT Action
   }
 
   FORCEINLINE void
-  addPrecondicion(uint32 condicion, bool b)
+  setPrecondicion(uint32 condicion, bool b)
   {
-    m_preconditions.addCondicion(condicion);
     m_preconditions.setCondicion(condicion,b);
   }
 
   FORCEINLINE void
-  addEffects(uint32 condicion, bool b)
+  setEffect(uint32 condicion, bool b)
   {
-    m_effects.addCondicion(condicion);
     m_effects.setCondicion(condicion,b);
   }
+
+  /**
+   * @brief if in this world state the action can be executed
+   * @param ws 
+   * @return 
+  */
+  bool
+  validatePrecondicions(const WorldState& ws);
+
+  /**
+   * @brief changes this world state at how it would be after executing this action
+   * @param ws 
+   * @return 
+  */
+  void
+  applyEffects(WorldState& ws);
 
   /**
    * @brief si esta accoon va a resolver cualquiera de las condiciones

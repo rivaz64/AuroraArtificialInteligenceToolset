@@ -2,8 +2,19 @@
 
 namespace auToolSeetSDK
 {
+bool
+Action::validatePrecondicions(const WorldState& ws)
+{
+  return m_preconditions.satisfies(ws);
+}
 
-bool 
+void
+Action::applyEffects(WorldState& ws)
+{
+  ws.m_mask |= m_effects.m_mask;
+  ws.m_condicions = (m_effects.m_mask&m_effects.m_condicions)|((~m_effects.m_mask)&ws.m_condicions);
+}
+bool
 Action::canSolvePlan(WorldState& currentWS, WorldState& goalWS)
 {
   //auto mask = m_effects.getMask()&currentWS.getMask()&goalWS.getMask();

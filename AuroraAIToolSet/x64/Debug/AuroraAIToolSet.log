@@ -1,2 +1,6 @@
-﻿  auWorldState.cpp
+﻿  auAction.cpp
+  auPlansGraph.cpp
+  auWorldState.cpp
+  Generating Code...
+     Creating library C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.lib and object C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.exp
   AuroraAIToolSet.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.dll
