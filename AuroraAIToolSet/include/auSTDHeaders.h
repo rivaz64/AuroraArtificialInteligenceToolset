@@ -45,6 +45,7 @@ using std::cout;
 using std::to_string;
 using std::find;
 using std::function;
+using std::move;
 
 
 /**

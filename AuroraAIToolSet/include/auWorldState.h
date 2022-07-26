@@ -72,7 +72,32 @@ class AU_UTILITY_EXPORT WorldState
   static void
   defineCondicion(uint32 condicion);
 
-  
+  /**
+   * @brief the function to know if a property is true or false
+   * @param condicion 
+   * @param function 
+  */
+  static void
+  attachFunctionToCondicion(uint32 condicion, function<bool(void*)>&& function);
+
+  static uint32
+  getFlagPos(uint32 userFlag);
+
+  /**
+   * @brief gets the flag from the user defined
+   * @param userFlag 
+   * @return 
+  */
+  static uint32
+  getFlag(uint32 userFlag);
+
+  /**
+   * @brief gets the current world state for a pawn
+   * @param ws 
+   * @param pawn 
+  */
+  static void
+  getCurrentWorldState(WorldState& ws,void* pawn);
 
   /**
    * @brief add a condicion to concider
@@ -136,14 +161,6 @@ class AU_UTILITY_EXPORT WorldState
     return m_mask;
   }
 
-  /**
-   * @brief gets the flag from the user defined
-   * @param userFlag 
-   * @return 
-  */
-  static uint32
-  getFlag(uint32 userFlag);
-
   FORCEINLINE void
   setMask(uint32 flagMask)
   {
@@ -162,16 +179,24 @@ class AU_UTILITY_EXPORT WorldState
     return m_condicions;
   }
 
-  static Vector<uint32> m_flagMapping;
+  
 
  private:
+
+  void
+  setCondicionWithFlag(uint32 flag, bool isTrue); 
 
   /**
    * @brief pams the flag with user flags
    * first is the user flag
    * second is the world state flag 
   */
-  
+  static Vector<uint32> c_flagMapping;
+
+  /**
+   * @brief the functions to fill a world state
+  */
+  static Vector<function<bool(void*)>> c_condicionFiller;
 
   /**
    * @brief the condicions to concider in this world state
@@ -182,6 +207,8 @@ class AU_UTILITY_EXPORT WorldState
    * @brief the condicions in the world that can be true or not
   */
   uint32 m_condicions;
+
+  
 
   friend class Action;
 };

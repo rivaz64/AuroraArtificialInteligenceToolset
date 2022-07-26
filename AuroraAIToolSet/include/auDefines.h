@@ -242,7 +242,7 @@
  /************************************************************************/
 
  //
-#if AU_PLATFORM == AU_PLATFORM_LINUX || OA_PLATFORM == OA_PLATFORM_OSX
+#if AU_PLATFORM == AU_PLATFORM_LINUX || AU_PLATFORM == AU_PLATFORM_OSX
 
 //if we're on debug mode
 # if defined(_DEBUG) || defined(DEBUG)

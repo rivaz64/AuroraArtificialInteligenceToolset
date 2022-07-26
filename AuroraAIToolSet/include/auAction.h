@@ -15,6 +15,9 @@ class AU_UTILITY_EXPORT Action
 {
  public:
   
+  Action(float cost) :
+    m_cost(cost) {}
+
   /**
    * @brief sets the precondicions to a world state 
    * @param ws 
