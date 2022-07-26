@@ -23,7 +23,7 @@ WorldState::defineCondicion(uint32 condicion)
   m_flagMapping.push_back(condicion);
 }
 
-void 
+void
 WorldState::addCondicion(uint32 condicion)
 { 
   auto flag = getFlag(condicion);

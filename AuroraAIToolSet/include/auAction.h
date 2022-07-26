@@ -31,6 +31,20 @@ class AU_UTILITY_EXPORT Action
     m_effects = ws;
   }
 
+  FORCEINLINE void
+  addPrecondicion(uint32 condicion, bool b)
+  {
+    m_preconditions.addCondicion(condicion);
+    m_preconditions.setCondicion(condicion,b);
+  }
+
+  FORCEINLINE void
+  addEffects(uint32 condicion, bool b)
+  {
+    m_effects.addCondicion(condicion);
+    m_effects.setCondicion(condicion,b);
+  }
+
   /**
    * @brief si esta accoon va a resolver cualquiera de las condiciones
    * @param currentWS 

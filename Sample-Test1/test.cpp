@@ -3,11 +3,14 @@
 #include "auWorldState.h"
 #include "auAction.h"
 #include "auPlansGraph.h"
+#include "Flags.h"
+#include "Attack.h"
 
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
 using auToolSeetSDK::PlansGraph;
 using auToolSeetSDK::Vector;
+using auToolSeetSDK::Attack;
 
 int main(int argc, char** argv)
 {
@@ -15,12 +18,6 @@ int main(int argc, char** argv)
   RUN_ALL_TESTS();
   return 0;
 }
-
-enum CONDICIONS{
-  HAS_WEAPON,
-  HAS_BULLETS,
-  PLAYER_DEAD
-};
 
 TEST(FlagDefines, FlagPositions) {
   
@@ -106,13 +103,36 @@ TEST(FlagDefines, FlagPositions) {
 
 TEST(FlagComparations, DiferentFlagsDiferentMask) {
 
-  WorldState::defineCondicion(HAS_WEAPON);
-  WorldState::defineCondicion(HAS_BULLETS);
-  WorldState::defineCondicion(PLAYER_DEAD);
+  WorldState::defineCondicion(HAS_WEAPON_RANGED);
+  WorldState::defineCondicion(HAS_WEAPON_MELEE);
+  WorldState::defineCondicion(HAS_WEAPON_THROWN);
+  WorldState::defineCondicion(WEAPON_LOADED);
+  WorldState::defineCondicion(ENEMY_DEAD);
+  WorldState::defineCondicion(AT_TARGET_LOCATION);
+  WorldState::defineCondicion(DISTURBANCE_EXISTS);
 
-  PlansGraph graph;
-  Action attack;
-  WorldState ws;
-  attack.setPrecondicions();
-  graph.buildGraph();
+  Attack attack(HAS_WEAPON_RANGED,WEAPON_LOADED);
+  attack.addPrecondicion(WEAPON_LOADED,true);
+
+  Attack attackMelee(HAS_WEAPON_MELEE,ENEMY_IN_MELEE_RANGE);
+
+  Attack attackThrow(HAS_WEAPON_THROWN,ENEMY_IN_THROWN_RANGE);
+
+  Action investigateDisturbance;
+  investigateDisturbance.setPrecondicions(WorldState({{HAS_WEAPON,true},
+                                                     {AT_TARGET_LOCATION,true}}));
+  investigateDisturbance.setEffects(WorldState({{DISTURBANCE_EXISTS,false}}));
+
+  Action lookDisturbance;
+  investigateDisturbance.setPrecondicions(WorldState({{HAS_WEAPON,true}}));
+  investigateDisturbance.setEffects(WorldState({{DISTURBANCE_EXISTS,false}}));
+
+  Action surveyArea;
+  surveyArea.setPrecondicions(WorldState({{HAS_WEAPON,true}}));
+  surveyArea.setEffects(WorldState({{SURVEYED_AREA,true}}));
+
+  Action opedDoor;
+  investigateDisturbance.setEffects(WorldState({{DOOR_CLOSED,false}}));
+
+  //graph.buildGraph();
 }

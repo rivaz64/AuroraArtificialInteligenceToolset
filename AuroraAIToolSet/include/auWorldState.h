@@ -58,12 +58,15 @@ class AU_UTILITY_EXPORT WorldState
   WorldState() = default;
 
   WorldState(Vector<Pair<uint32,bool>>&& properties);
+
   /**
    * @brief defines a condicion of the world
    * @param condicion 
   */
   static void
   defineCondicion(uint32 condicion);
+
+  
 
   /**
    * @brief add a condicion to concider
