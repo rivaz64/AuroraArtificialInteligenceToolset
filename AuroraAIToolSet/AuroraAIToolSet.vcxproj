@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Attack.h" />
     <ClInclude Include="include\auAction.h" />
     <ClInclude Include="include\auAStar.h" />
     <ClInclude Include="include\auBreadthFirstSearch.h" />
@@ -34,7 +33,6 @@
     <ClInclude Include="include\auWorldState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="source\auAction.cpp" />
     <ClCompile Include="source\auAStarGraph.cpp" />
     <ClCompile Include="source\auBreadthFirstSearch.cpp" />

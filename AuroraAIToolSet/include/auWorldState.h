@@ -107,8 +107,22 @@ class AU_UTILITY_EXPORT WorldState
   uint32 
   getNumOfDiferences(const WorldState& other);
 
+  /**
+   * @brief the number of condicions of this state cares about that are satisfied in the 
+   * other worldState
+   * @param other 
+   * @return 
+  */
   uint32 
   getNumOfUnsatisfiedCondicion(const WorldState& other);
+
+  /**
+   * @brief if the other world state satisfies this one
+   * @param other 
+   * @return 
+  */
+  bool 
+  satisfies(const WorldState& other);
 
   FORCEINLINE uint32
   getMask()

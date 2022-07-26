@@ -9,8 +9,8 @@ countBitsOn(uint32 flag)
 {
   uint32 numOfBits = 0;
   for(SIZE_T i = 0; i<32; ++i){
-    uint32 flag = 1<<i;
-    if(flag&flag){
+    uint32 actualflag = 1<<i;
+    if(actualflag&flag){
       ++numOfBits;
     }
   }
@@ -41,6 +41,7 @@ void
 WorldState::setCondicion(uint32 condicion, bool isTrue)
 {
   auto flag = getFlag(condicion);
+  m_flagMask |= flag;
   if(isTrue){
     m_wordlStateFlags |= flag;
   }
@@ -77,6 +78,12 @@ WorldState::getNumOfUnsatisfiedCondicion(const WorldState& other)
                         )
                        );
   return countBitsOn(unsatisfied);
+}
+
+bool 
+WorldState::satisfies(const WorldState& other)
+{
+  return getNumOfUnsatisfiedCondicion(other)==0;
 }
 
 uint32 

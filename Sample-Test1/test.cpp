@@ -3,136 +3,101 @@
 #include "auWorldState.h"
 #include "auAction.h"
 #include "auPlansGraph.h"
-#include "Flags.h"
-#include "Attack.h"
 
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
 using auToolSeetSDK::PlansGraph;
 using auToolSeetSDK::Vector;
-using auToolSeetSDK::Attack;
+
+namespace MY_CONDICIONS
+{
+enum E
+{
+ENEMY_DEAD,
+HAS_WEAPON,
+HAS_BULLETS,
+IS_COVERED,
+};
+}
 
 int main(int argc, char** argv)
 {
+  WorldState::defineCondicion(MY_CONDICIONS::ENEMY_DEAD);
+  WorldState::defineCondicion(MY_CONDICIONS::HAS_WEAPON);
+  WorldState::defineCondicion(MY_CONDICIONS::HAS_BULLETS);
+  WorldState::defineCondicion(MY_CONDICIONS::IS_COVERED);
   ::testing::InitGoogleTest(&argc, argv);
   RUN_ALL_TESTS();
   return 0;
 }
 
-TEST(FlagDefines, FlagPositions) {
-  
+class WorldStateTest : public ::testing::Test
+{
+  protected:
+    // Objects declared here can be used by all tests in the test case for this component.
+    WorldState ws;
+};
+
+TEST_F(WorldStateTest, same) {
+    WorldState deadEnemy;
+    deadEnemy.setCondicion(MY_CONDICIONS::ENEMY_DEAD,true);
+
+    ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,true);
+    ASSERT_TRUE(ws.satisfies(deadEnemy));
 }
 
-//TEST(FlagComparations, SameFlagsSameMask) {
-//  WorldState ws1, ws2;
-//
-//  ws1.addCondicion(HAS_WEAPON);
-//  ws1.addCondicion(PLAYER_IN_RANGE);
-//  ws1.setCondicion(HAS_WEAPON,true);
-//  ws1.setCondicion(PLAYER_IN_RANGE,true);
-//
-//  ws2.addCondicion(HAS_WEAPON);
-//  ws2.addCondicion(PLAYER_IN_RANGE);
-//  ws2.setCondicion(HAS_WEAPON,true);
-//  ws2.setCondicion(PLAYER_IN_RANGE,true);
-//
-//  EXPECT_EQ(ws1.getNumOfDiferences(ws2),0);
-//}
-//
-//
-//TEST(FlagComparations,  DiferentFlagsSameMask) {
-//  WorldState ws1, ws2;
-//
-//  ws1.addCondicion(HAS_WEAPON);
-//  ws1.addCondicion(PLAYER_IN_RANGE);
-//  ws1.addCondicion(PLAYER_DEAD);
-//  ws1.setCondicion(HAS_WEAPON,true);
-//  ws1.setCondicion(PLAYER_IN_RANGE,true);
-//  ws1.setCondicion(PLAYER_DEAD,true);
-//
-//  ws2.addCondicion(HAS_WEAPON);
-//  ws2.addCondicion(PLAYER_IN_RANGE);
-//  ws2.addCondicion(PLAYER_DEAD);
-//  ws2.setCondicion(HAS_WEAPON,false);
-//  ws2.setCondicion(PLAYER_IN_RANGE,true);
-//  ws1.setCondicion(PLAYER_DEAD,false);
-//
-//  EXPECT_EQ(ws1.getNumOfDiferences(ws2),2);
-//}
-//
-//TEST(FlagComparations, sameFlagsDiferentMask) {
-//  WorldState ws1, ws2;
-//
-//  ws1.addCondicion(HAS_BULLETS);
-//  ws1.addCondicion(PLAYER_IN_RANGE);
-//  ws1.addCondicion(PLAYER_DEAD);
-//  ws1.setCondicion(HAS_BULLETS,true);
-//  ws1.setCondicion(PLAYER_IN_RANGE,true);
-//  ws1.setCondicion(PLAYER_DEAD,true);
-//
-//  ws2.addCondicion(HAS_WEAPON);
-//  ws2.addCondicion(PLAYER_IN_RANGE);
-//  ws2.addCondicion(PLAYER_DEAD);
-//  ws2.setCondicion(HAS_WEAPON,true);
-//  ws2.setCondicion(PLAYER_IN_RANGE,true);
-//  ws1.setCondicion(PLAYER_DEAD,true);
-//
-//  EXPECT_EQ(ws1.getNumOfDiferences(ws2),2);
-//}
-//
-//
-//TEST(FlagComparations, DiferentFlagsDiferentMask) {
-//  WorldState ws1, ws2;
-//
-//  ws1.addCondicion(HAS_BULLETS);
-//  ws1.addCondicion(PLAYER_IN_RANGE);
-//  ws1.addCondicion(PLAYER_DEAD);
-//  ws1.setCondicion(HAS_BULLETS,true);
-//  ws1.setCondicion(PLAYER_IN_RANGE,true);
-//  ws1.setCondicion(PLAYER_DEAD,true);
-//
-//  ws2.addCondicion(HAS_WEAPON);
-//  ws2.addCondicion(PLAYER_IN_RANGE);
-//  ws2.addCondicion(PLAYER_DEAD);
-//  ws2.setCondicion(HAS_WEAPON,false);
-//  ws2.setCondicion(PLAYER_IN_RANGE,false);
-//  ws1.setCondicion(PLAYER_DEAD,false);
-//
-//  EXPECT_EQ(ws1.getNumOfDiferences(ws2),4);
-//}
+TEST_F(WorldStateTest, different) {
+    WorldState deadEnemy;
+    deadEnemy.setCondicion(MY_CONDICIONS::ENEMY_DEAD,true);
 
-TEST(FlagComparations, DiferentFlagsDiferentMask) {
-
-  WorldState::defineCondicion(HAS_WEAPON_RANGED);
-  WorldState::defineCondicion(HAS_WEAPON_MELEE);
-  WorldState::defineCondicion(HAS_WEAPON_THROWN);
-  WorldState::defineCondicion(WEAPON_LOADED);
-  WorldState::defineCondicion(ENEMY_DEAD);
-  WorldState::defineCondicion(AT_TARGET_LOCATION);
-  WorldState::defineCondicion(DISTURBANCE_EXISTS);
-
-  Attack attack(HAS_WEAPON_RANGED,WEAPON_LOADED);
-  attack.addPrecondicion(WEAPON_LOADED,true);
-
-  Attack attackMelee(HAS_WEAPON_MELEE,ENEMY_IN_MELEE_RANGE);
-
-  Attack attackThrow(HAS_WEAPON_THROWN,ENEMY_IN_THROWN_RANGE);
-
-  Action investigateDisturbance;
-  investigateDisturbance.setPrecondicions(WorldState({{HAS_WEAPON,true},
-                                                     {AT_TARGET_LOCATION,true}}));
-  investigateDisturbance.setEffects(WorldState({{DISTURBANCE_EXISTS,false}}));
-
-  Action lookDisturbance;
-  investigateDisturbance.setPrecondicions(WorldState({{HAS_WEAPON,true}}));
-  investigateDisturbance.setEffects(WorldState({{DISTURBANCE_EXISTS,false}}));
-
-  Action surveyArea;
-  surveyArea.setPrecondicions(WorldState({{HAS_WEAPON,true}}));
-  surveyArea.setEffects(WorldState({{SURVEYED_AREA,true}}));
-
-  Action opedDoor;
-  investigateDisturbance.setEffects(WorldState({{DOOR_CLOSED,false}}));
-
-  //graph.buildGraph();
+    ws.setCondicion(MY_CONDICIONS::ENEMY_DEAD,false);
+    ASSERT_FALSE(ws.satisfies(deadEnemy));
 }
+
+TEST_F(WorldStateTest, equalMatters) {
+    WorldState goal;
+    goal.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    goal.setCondicion(MY_CONDICIONS::HAS_WEAPON,false);
+    goal.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+    ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    ws.setCondicion(MY_CONDICIONS::HAS_WEAPON,false);
+    ws.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+    ASSERT_TRUE(ws.satisfies(goal));
+}
+
+TEST_F(WorldStateTest, nothingMatters) {
+    WorldState goal;
+    goal.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    goal.setCondicion(MY_CONDICIONS::HAS_WEAPON,false);
+    goal.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+    ASSERT_TRUE(ws.satisfies(goal));
+}
+
+TEST_F(WorldStateTest, someMatters) {
+    WorldState goal;
+    goal.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    goal.setCondicion(MY_CONDICIONS::HAS_WEAPON,false);
+    goal.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+    ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+
+    ASSERT_TRUE(ws.satisfies(goal));
+}
+
+TEST_F(WorldStateTest, someMattersDifferentValues) {
+    WorldState goal;
+    goal.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    goal.setCondicion(MY_CONDICIONS::HAS_WEAPON,false);
+    goal.setCondicion(MY_CONDICIONS::IS_COVERED,false);
+
+    ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,false);
+    ws.setCondicion(MY_CONDICIONS::HAS_BULLETS,true);
+
+    ASSERT_EQ(ws.getNumOfUnsatisfiedCondicion(goal),1);
+}
+
+
+
+

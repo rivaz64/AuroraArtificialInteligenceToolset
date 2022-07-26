@@ -1,10 +1,2 @@
-﻿  auAction.cpp
-  auAStarGraph.cpp
-  auBreadthFirstSearch.cpp
-  auPathFinder.cpp
-  auPlansGraph.cpp
-  auSearchGraph.cpp
-  auWorldState.cpp
-  Generating Code...
-     Creating library C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.lib and object C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.exp
+﻿  auWorldState.cpp
   AuroraAIToolSet.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.dll
