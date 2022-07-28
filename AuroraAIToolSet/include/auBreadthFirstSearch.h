@@ -11,7 +11,7 @@
 namespace auToolSeetSDK
 {
 
-class BreadthFirstSearch :
+class AU_UTILITY_EXPORT BreadthFirstSearch :
   public PathFinder
 {
  protected:

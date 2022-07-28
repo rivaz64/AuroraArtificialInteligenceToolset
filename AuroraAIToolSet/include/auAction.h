@@ -15,8 +15,10 @@ class AU_UTILITY_EXPORT Action
 {
  public:
   
-  Action(float cost) :
-    m_cost(cost) {}
+  Action() = default;
+
+  Action(String&& name, float cost) :
+    m_name(move(name)), m_cost(cost) {}
 
   /**
    * @brief sets the precondicions to a world state 
@@ -130,7 +132,18 @@ class AU_UTILITY_EXPORT Action
     return m_cost;
   }
 
+  FORCEINLINE String
+  getName()
+  {
+    return m_name;
+  }
+
  private:
+
+  /**
+   * @brief to identify this action
+  */
+  String m_name;
 
   /**
    * @brief the things necesary for executing this action

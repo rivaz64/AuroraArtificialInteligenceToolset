@@ -44,7 +44,10 @@ class AU_UTILITY_EXPORT SearchGraph
    * @return the distance
   */
   virtual float
-  getHeuristicDistance(WPtr<SearchNode> nodeId) {return 0.0f;}
+  getHeuristicDistance(WPtr<SearchNode> node) {return 0.0f;}
+
+  virtual bool
+  isAtGoal(uint32 nodeId, uint32 goal);
 
  private:
 

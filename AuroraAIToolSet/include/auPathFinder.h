@@ -36,7 +36,7 @@ kPathFinded
 /**
  * @brief interface cass for all types of searches
 */
-class PathFinder
+class AU_UTILITY_EXPORT PathFinder
 {
  public:
 
@@ -74,11 +74,16 @@ class PathFinder
    * @brief 
    * @param  
   */
-  FORCEINLINE void
+  FORCEINLINE SEARCH_STATE::E
   run()
   {
     reset();
-    while(step() != SEARCH_STATE::kSearching);
+    addNode(m_sourceId,WPtr<SearchNode>());
+    auto actualState = SEARCH_STATE::kSearching;
+    while(actualState == SEARCH_STATE::kSearching){
+      actualState = step();
+    }
+    return actualState;
   }
 
   /**

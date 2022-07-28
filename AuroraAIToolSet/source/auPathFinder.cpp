@@ -23,7 +23,7 @@ PathFinder::step()
     return SEARCH_STATE::kFailed;
   }
   auto actualNode = wNode.lock();
-  if(actualNode->id == m_goalId){
+  if(m_graph->isAtGoal(actualNode->id,m_goalId)){
     makePath(actualNode);
     return SEARCH_STATE::kPathFinded;
   }

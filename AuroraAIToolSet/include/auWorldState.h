@@ -59,10 +59,17 @@ class AU_UTILITY_EXPORT WorldState
 
   WorldState(Vector<Pair<uint32,bool>>&& properties);
 
+  /**
+   * @brief biulds the world state that has this id
+   * @param id 
+  */
+  WorldState(uint32 id);
+
   FORCEINLINE bool 
   operator==(const WorldState& other) const
   {
-    return getNumOfDiferences(other) == 0;
+    int32 difs = getNumOfDiferences(other);
+    return difs == 0;
   }
 
   /**
@@ -179,7 +186,12 @@ class AU_UTILITY_EXPORT WorldState
     return m_condicions;
   }
 
-  
+  /**
+   * @brief gets the id of this ws 
+   * @return 
+  */
+  uint32
+  getId();
 
  private:
 
@@ -191,12 +203,12 @@ class AU_UTILITY_EXPORT WorldState
    * first is the user flag
    * second is the world state flag 
   */
-  static Vector<uint32> c_flagMapping;
+  static Vector<uint32> g_flagMapping;
 
   /**
    * @brief the functions to fill a world state
   */
-  static Vector<function<bool(void*)>> c_condicionFiller;
+  static Vector<function<bool(void*)>> g_condicionFiller;
 
   /**
    * @brief the condicions to concider in this world state

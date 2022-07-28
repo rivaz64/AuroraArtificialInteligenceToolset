@@ -2,8 +2,8 @@
 
 namespace auToolSeetSDK{
 
-Vector<uint32> WorldState::c_flagMapping = {};
-Vector<function<bool(void*)>> WorldState::c_condicionFiller = {};
+Vector<uint32> WorldState::g_flagMapping = {};
+Vector<function<bool(void*)>> WorldState::g_condicionFiller = {};
 
 uint32
 countBitsOn(uint32 flag)
@@ -18,24 +18,35 @@ countBitsOn(uint32 flag)
   return numOfBits;
 }
 
-void 
+WorldState::WorldState(uint32 id)
+{
+  auto numOfFlags = g_flagMapping.size();
+  m_condicions = id;
+  m_mask = id;
+  m_condicions <<= 32-numOfFlags;
+  m_condicions >>= 32-numOfFlags;
+  m_mask <<= 32-numOfFlags*2;
+  m_mask >>= 32-numOfFlags;
+}
+
+void
 WorldState::defineCondicion(uint32 condicion)
 {
-  c_flagMapping.push_back(condicion);
-  c_condicionFiller.resize(c_flagMapping.size());
+  g_flagMapping.push_back(condicion);
+  g_condicionFiller.resize(g_flagMapping.size());
 }
 
 void 
 WorldState::attachFunctionToCondicion(uint32 condicion, function<bool(void*)>&& function)
 {
   auto flagPos = getFlagPos(condicion);
-  c_condicionFiller[flagPos] = move(function);
+  g_condicionFiller[flagPos] = move(function);
 }
 
 uint32 
 WorldState::getFlagPos(uint32 userFlag)
 {
-  auto flagPos = find(c_flagMapping.begin(),c_flagMapping.end(),userFlag)-c_flagMapping.begin();
+  auto flagPos = find(g_flagMapping.begin(),g_flagMapping.end(),userFlag)-g_flagMapping.begin();
   return flagPos;
 }
 
@@ -52,7 +63,7 @@ WorldState::getCurrentWorldState(WorldState& ws, void* pawn)
   for(SIZE_T i = 0; i<32; ++i){
     uint32 actualflag = 1<<i;
     if(actualflag&mask){
-      ws.setCondicionWithFlag(actualflag,c_condicionFiller[i](pawn));
+      ws.setCondicionWithFlag(actualflag, g_condicionFiller[i](pawn));
     }
   };
 }
@@ -115,7 +126,19 @@ WorldState::satisfies(const WorldState& other)
 }
 
 
-void 
+uint32
+WorldState::getId()
+{
+  auto numOfFlags = g_flagMapping.size();
+  uint32 condicions = m_condicions;
+  uint32 mask = m_mask;
+  condicions <<= 32-numOfFlags;
+  condicions >>= 32-numOfFlags;
+  mask <<= numOfFlags;
+  return mask|condicions;
+}
+
+void
 WorldState::setCondicionWithFlag(uint32 flag, bool isTrue)
 {
   m_mask |= flag;
