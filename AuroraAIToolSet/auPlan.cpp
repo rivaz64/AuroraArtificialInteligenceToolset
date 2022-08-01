@@ -25,8 +25,8 @@ Plan::execute()
 PLAN_STATE::E 
 Plan::update(WorldState& ws)
 {
-  auto& wAction = m_actions[0];
-  if(wAction.expired()) return;
+  auto wAction = m_actions[0];
+  if(wAction.expired()) return PLAN_STATE::kFailed;
   auto action = wAction.lock();
 
   if(!action->validatePrecondicions(ws)){
@@ -41,6 +41,11 @@ Plan::update(WorldState& ws)
       return PLAN_STATE::kCompleted;
     }
   }
+
+  wAction = m_actions[0];
+  if(wAction.expired()) return PLAN_STATE::kFailed;
+  action = wAction.lock();
+
 
   if(action->validatePrecondicions(ws)){
     action->execute();
