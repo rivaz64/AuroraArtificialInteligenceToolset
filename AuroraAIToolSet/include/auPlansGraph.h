@@ -9,7 +9,8 @@
 #include "auSearchGraph.h"
 #include "auAction.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 class AU_UTILITY_EXPORT PlansGraph :
   public SearchGraph

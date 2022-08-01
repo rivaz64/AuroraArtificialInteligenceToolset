@@ -1,6 +1,7 @@
 #include "auWorldState.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 Vector<uint32> WorldState::g_flagMapping = {};
 Vector<function<bool(void*)>> WorldState::g_condicionFiller = {};

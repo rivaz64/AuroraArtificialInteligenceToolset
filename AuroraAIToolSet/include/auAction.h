@@ -9,7 +9,8 @@
 #include "auPrerequisites.h"
 #include "auWorldState.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 class AU_UTILITY_EXPORT Action
 {
@@ -99,7 +100,7 @@ class AU_UTILITY_EXPORT Action
    * @brief starts executing this action
   */
   virtual void
-  activation() {}
+  execute() {}
 
   /**
    * @brief stops executing this action

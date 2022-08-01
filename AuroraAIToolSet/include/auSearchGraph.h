@@ -8,7 +8,8 @@
 
 #include "auPrerequisites.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 /**
  * @brief a graph that a seach can be done in

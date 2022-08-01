@@ -1,7 +1,8 @@
 #include "auPlansGraph.h"
 #include "auAction.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 //void 
 //PlansGraph::buildGraph(Vector<Action>& actions)

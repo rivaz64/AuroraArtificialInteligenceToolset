@@ -8,7 +8,8 @@
 
 #include "auPrerequisites.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 /**
  * @brief nodes used for the search

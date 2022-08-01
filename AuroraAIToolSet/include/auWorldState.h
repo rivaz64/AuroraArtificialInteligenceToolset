@@ -8,7 +8,8 @@
 
 #include "auPrerequisites.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 
 namespace WORLD_PROP_TYPE{
 enum E
