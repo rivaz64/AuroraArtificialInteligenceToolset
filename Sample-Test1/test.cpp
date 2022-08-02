@@ -443,12 +443,12 @@ TEST(PlanTest, basic){
   searcher.setGoalId(goalWS.getId());
   auto result = searcher.run();
   auto path = searcher.getPath();
-  path.pop_back();
-  std::reverse(path.begin(),path.end());
+  
   auto plan = plans->getPlan(path);
   for(auto& action : plan){
     auToolSeetSDK::print(action.getName());
   }
+
   ASSERT_TRUE(plan.size()!=0);
 
 }

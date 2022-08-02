@@ -17,10 +17,10 @@ class AU_UTILITY_EXPORT PlansGraph :
 {
  public:
   
-  PlansGraph(Vector<Action>&& actions) :
+  PlansGraph(Vector<SPtr<Action>>&& actions) :
     m_actions(move(actions)) {}
 
-  PlansGraph(const Vector<Action>& actions) :
+  PlansGraph(const Vector<SPtr<Action>>& actions) :
     m_actions(actions) {}
 
   Vector<uint32>
@@ -31,7 +31,7 @@ class AU_UTILITY_EXPORT PlansGraph :
    * @param path the path of id of nodes
    * @return a plan of actions
   */
-  Vector<Action>
+  SPtr<Plan>
   getPlan(const Vector<uint32>& path);
 
   float
@@ -48,7 +48,7 @@ class AU_UTILITY_EXPORT PlansGraph :
   /**
    * @brief tha actions of this graph toconsider
   */
-  Vector<Action> m_actions;
+  Vector<SPtr<Action>> m_actions;
 };
 
 }

@@ -15,6 +15,9 @@ PathFinder::reset()
 SEARCH_STATE::E
 PathFinder::step()
 {
+  if(m_graph.expired()) return SEARCH_STATE::kFailed;
+
+  auto graph = m_graph.lock();
   if(!canContinueSearching()){
     return SEARCH_STATE::kFailed;
   }
@@ -23,11 +26,11 @@ PathFinder::step()
     return SEARCH_STATE::kFailed;
   }
   auto actualNode = wNode.lock();
-  if(m_graph->isAtGoal(actualNode->id,m_goalId)){
+  if(graph->isAtGoal(actualNode->id,m_goalId)){
     makePath(actualNode);
     return SEARCH_STATE::kPathFinded;
   }
-  auto adjacents = m_graph->getAdjacentNodes(actualNode->id);
+  auto adjacents = graph->getAdjacentNodes(actualNode->id);
   for(auto& adjacentId : adjacents){
     WPtr<SearchNode> adjacentNode;
     for(auto& otherNode : m_nodes){
@@ -75,6 +78,8 @@ PathFinder::makePath(WPtr<SearchNode> lastNode)
     m_path.push_back(node->id);
     wNode = node->parent;
   }
+  m_path.pop_back();
+  std::reverse(m_path.begin(),m_path.end());
 }
 
 void 

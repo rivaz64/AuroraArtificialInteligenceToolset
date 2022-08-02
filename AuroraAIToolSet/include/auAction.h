@@ -109,6 +109,12 @@ class AU_UTILITY_EXPORT Action
   deactivate() {}
 
   /**
+   * @brief updates this action
+  */
+  virtual void
+  update() {}
+
+  /**
    * @brief if the actions has been succesfully completed
    * @return 
   */

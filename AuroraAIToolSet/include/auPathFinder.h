@@ -66,7 +66,7 @@ class AU_UTILITY_EXPORT PathFinder
   }
 
   FORCEINLINE void
-  setGraph(SPtr<SearchGraph> graph)
+  setGraph(WPtr<SearchGraph> graph)
   {
     m_graph = graph;
   }
@@ -164,7 +164,7 @@ class AU_UTILITY_EXPORT PathFinder
   /**
    * @brief the graph to do the search in
   */
-  SPtr<SearchGraph> m_graph;
+  WPtr<SearchGraph> m_graph;
 
   /**
    * @brief all the search Nodes

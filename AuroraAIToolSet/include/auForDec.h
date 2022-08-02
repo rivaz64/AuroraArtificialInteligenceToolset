@@ -16,4 +16,5 @@ class PathFinder;
 class PlansGraph;
 struct WorldProperty;
 class WorldState;
+class Plan;
 }

@@ -51,7 +51,10 @@
     <ClInclude Include="include\auBreadthFirstSearch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="auPlan.h">
+    <ClInclude Include="include\auPlan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="auGoapPlanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,7 +80,10 @@
     <ClCompile Include="source\auAStarGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="auPlan.cpp">
+    <ClCompile Include="source\auPlan.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="auGoapPlanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

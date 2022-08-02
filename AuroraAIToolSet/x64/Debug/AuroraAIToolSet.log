@@ -1,8 +1,9 @@
-﻿  auPlan.cpp
+﻿  auGoapPlanner.cpp
   auAction.cpp
   auAStarGraph.cpp
   auBreadthFirstSearch.cpp
   auPathFinder.cpp
+  auPlan.cpp
   auPlansGraph.cpp
   auSearchGraph.cpp
   auWorldState.cpp
