@@ -66,6 +66,13 @@ class AU_UTILITY_EXPORT Action
   applyEffects(WorldState& ws);
 
   /**
+   * @brief if this action has been completed succesfully in the current world state
+   * @param ws 
+  */
+  bool
+  isCompleted(const WorldState& ws);
+
+  /**
    * @brief si esta accoon va a resolver cualquiera de las condiciones
    * @param currentWS 
    * @param goalWS 
@@ -113,13 +120,6 @@ class AU_UTILITY_EXPORT Action
   */
   virtual void
   update() {}
-
-  /**
-   * @brief if the actions has been succesfully completed
-   * @return 
-  */
-  virtual bool
-  completed() {return false;}
 
   FORCEINLINE WorldState&
   getPrecondicions()

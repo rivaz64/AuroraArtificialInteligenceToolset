@@ -17,19 +17,13 @@ Plan::execute()
 }
 
 PLAN_STATE::E 
-Plan::update(WorldState& ws)
+Plan::update(const WorldState& ws)
 {
   auto wAction = m_actions[m_actualAction];
   if(wAction.expired()) return PLAN_STATE::kFailed;
   auto action = wAction.lock();
 
-  if(!action->validatePrecondicions(ws)){
-    action->deactivate();
-    return PLAN_STATE::kFailed;
-  }
-
-  if(action->completed()){
-    action->applyEffects(ws);
+  if(action->isCompleted(ws)){
     ++m_actualAction;
     if(m_actualAction == m_actions.size()){
       return PLAN_STATE::kCompleted;
@@ -42,6 +36,10 @@ Plan::update(WorldState& ws)
       action->execute();
       return PLAN_STATE::kExecuting;
     }
+    return PLAN_STATE::kFailed;
+  }
+  else if(!action->validatePrecondicions(ws)){
+    action->deactivate();
     return PLAN_STATE::kFailed;
   }
   else

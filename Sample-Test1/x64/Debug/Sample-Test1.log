@@ -1,23 +1,29 @@
 ﻿  test.cpp
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,22): error C2672: 'begin': no matching overloaded function found
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C2893: Failed to specialize function template 'unknown-type std::begin(_Container &)'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1844): message : see declaration of 'std::begin'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): message : With the following template arguments:
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): message : '_Container=std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C2784: 'const _Elem *std::begin(std::initializer_list<_Elem>) noexcept': could not deduce template argument for 'std::initializer_list<_Elem>' from 'std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(55): message : see declaration of 'std::begin'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,22): error C2672: 'end': no matching overloaded function found
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C2893: Failed to specialize function template 'unknown-type std::end(_Container &)'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1854): message : see declaration of 'std::end'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): message : With the following template arguments:
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): message : '_Container=std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C2784: 'const _Elem *std::end(std::initializer_list<_Elem>) noexcept': could not deduce template argument for 'std::initializer_list<_Elem>' from 'std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(60): message : see declaration of 'std::end'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C3536: '<begin>$L0': cannot be used before it is initialized
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,27): error C3536: '<end>$L0': cannot be used before it is initialized
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(448,26): error C2100: illegal indirection
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(452,3): error C2039: 'size': is not a member of 'std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auSTDHeaders.h(94): message : see declaration of 'std::shared_ptr<auToolSeetSDK::Plan>'
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(452,3): error C2512: 'testing::AssertionResult': no appropriate default constructor available
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(452,3): message : No constructor could take the source type, or constructor overload resolution was ambiguous
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(452,3): error C2737: 'gtest_ar_': const object must be initialized
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(149,77): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2014): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char(&)[7],int>(_Ty &,const char (&)[7],int &&) noexcept(false)' being compiled
+          with
+          [
+              _Ty=auToolSeetSDK::Action
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+          with
+          [
+              _Ty=auToolSeetSDK::Action
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+          with
+          [
+              _Ty=auToolSeetSDK::Action
+          ]
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auSTDHeaders.h(174): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> std::make_shared<T,const char(&)[7],_Ty>(const char (&)[7],_Ty &&)' being compiled
+          with
+          [
+              T=auToolSeetSDK::Action,
+              _Ty=int
+          ]
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(37): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> auToolSeetSDK::makeSPtr<auToolSeetSDK::Action,const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+  Sample-Test1.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\Sample-Test1.exe

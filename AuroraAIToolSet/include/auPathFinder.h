@@ -119,9 +119,10 @@ class AU_UTILITY_EXPORT PathFinder
   /**
    * @brief adds the nesesary data for the path find
    * @param node 
+   * @param parent
   */
   virtual void
-  addDataToNode(WPtr<SearchNode> node){}
+  addDataToNode(WPtr<SearchNode> node, WPtr<SearchNode> parent){}
 
   /**
    * @brief after geting to the end it finds the path backwards

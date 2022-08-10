@@ -4,6 +4,7 @@
 #include "auAction.h"
 #include "auPlansGraph.h"
 #include "auBreadthFirstSearch.h"
+#include "auPlan.h"
 
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
@@ -11,6 +12,7 @@ using auToolSeetSDK::PlansGraph;
 using auToolSeetSDK::Vector;
 using auToolSeetSDK::BreadthFirstSearch;
 using auToolSeetSDK::makeSPtr;
+using auToolSeetSDK::SPtr;
 
 namespace CONDICIONS
 {
@@ -31,24 +33,24 @@ ME_DEAD
 };
 }
 
-Vector<Action> actions;
-Action patrol("patrol",250);
-Action aproach("aproach",2);
-Action aproachClose("aproachClose",4);
-Action loadGun("loadGun",2);
-Action prepareGun("prepareGun",1);
-Action putAwayGun("putAwayGun",1);
-Action prepareKnife("prepareKnife",1);
-Action putAwayKnife("putAwayKnife",1);
-Action shoot("shoot",3);
-Action stab("stab",3);
-Action suicide("suicide",30);
+Vector<SPtr<Action>> actions;
+SPtr<Action> patrol = makeSPtr<Action>("patrol",250);
+SPtr<Action> aproach = makeSPtr<Action>("aproach",2);
+SPtr<Action> aproachClose = makeSPtr<Action>("aproachClose",4);
+SPtr<Action> loadGun = makeSPtr<Action>("loadGun",2);
+SPtr<Action> prepareGun = makeSPtr<Action>("prepareGun",1);
+SPtr<Action> putAwayGun = makeSPtr<Action>("putAwayGun",1);
+SPtr<Action> prepareKnife = makeSPtr<Action>("prepareKnife",1);
+SPtr<Action> putAwayKnife = makeSPtr<Action>("putAwayKnife",1);
+SPtr<Action> shoot = makeSPtr<Action>("shoot",3);
+SPtr<Action> stab = makeSPtr<Action>("stab",3);
+SPtr<Action> suicide = makeSPtr<Action>("suicide",30);
 
 void 
 defineCondicions()
 {
-  WorldState::defineCondicion(CONDICIONS::ENEMY_IN_SIGHT);
   WorldState::defineCondicion(CONDICIONS::ENEMY_DEAD);
+  WorldState::defineCondicion(CONDICIONS::ENEMY_IN_SIGHT);
   WorldState::defineCondicion(CONDICIONS::ENEMY_IN_RANGE);
   WorldState::defineCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE);
   WorldState::defineCondicion(CONDICIONS::HAS_KNIFE);
@@ -65,86 +67,86 @@ void
 createActions()
 {
   
-  patrol.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
-  patrol.setPrecondicion(CONDICIONS::WEAPON_IN_HAND,true);
-  patrol.setEffect(CONDICIONS::ENEMY_IN_SIGHT,true);
+  patrol->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
+  patrol->setPrecondicion(CONDICIONS::WEAPON_IN_HAND,true);
+  patrol->setEffect(CONDICIONS::ENEMY_IN_SIGHT,true);
   actions.push_back(patrol);
   
-  aproach.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
-  aproach.setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
-  aproach.setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, false);
-  aproach.setPrecondicion(CONDICIONS::GUN_LOADED, true);
-  aproach.setEffect(CONDICIONS::ENEMY_IN_RANGE, true);
+  aproach->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
+  aproach->setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
+  aproach->setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, false);
+  aproach->setPrecondicion(CONDICIONS::GUN_LOADED, true);
+  aproach->setEffect(CONDICIONS::ENEMY_IN_RANGE, true);
   actions.push_back(aproach);
 
   
-  aproachClose.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
-  aproachClose.setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
-  aproachClose.setPrecondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE, false);
-  aproachClose.setEffect(CONDICIONS::ENEMY_IN_CLOSE_RANGE, true);
+  aproachClose->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
+  aproachClose->setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
+  aproachClose->setPrecondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE, false);
+  aproachClose->setEffect(CONDICIONS::ENEMY_IN_CLOSE_RANGE, true);
   actions.push_back(aproachClose);
 
   
-  loadGun.setPrecondicion(CONDICIONS::HAS_BULLETS, true);
-  loadGun.setPrecondicion(CONDICIONS::GUN_LOADED, false);
-  loadGun.setPrecondicion(CONDICIONS::GUN_PREPARED, true);
-  loadGun.setEffect(CONDICIONS::GUN_LOADED, true);
-  loadGun.setEffect(CONDICIONS::HAS_BULLETS, false);
+  loadGun->setPrecondicion(CONDICIONS::HAS_BULLETS, true);
+  loadGun->setPrecondicion(CONDICIONS::GUN_LOADED, false);
+  loadGun->setPrecondicion(CONDICIONS::GUN_PREPARED, true);
+  loadGun->setEffect(CONDICIONS::GUN_LOADED, true);
+  loadGun->setEffect(CONDICIONS::HAS_BULLETS, false);
   actions.push_back(loadGun);
 
   
-  prepareGun.setPrecondicion(CONDICIONS::HAS_GUN, true);
-  prepareGun.setPrecondicion(CONDICIONS::WEAPON_IN_HAND, false);
-  prepareGun.setPrecondicion(CONDICIONS::GUN_PREPARED, false);
-  prepareGun.setEffect(CONDICIONS::WEAPON_IN_HAND, true);
-  prepareGun.setEffect(CONDICIONS::GUN_PREPARED, true);
+  prepareGun->setPrecondicion(CONDICIONS::HAS_GUN, true);
+  prepareGun->setPrecondicion(CONDICIONS::WEAPON_IN_HAND, false);
+  prepareGun->setPrecondicion(CONDICIONS::GUN_PREPARED, false);
+  prepareGun->setEffect(CONDICIONS::WEAPON_IN_HAND, true);
+  prepareGun->setEffect(CONDICIONS::GUN_PREPARED, true);
   actions.push_back(prepareGun);
 
   
-  putAwayGun.setPrecondicion(CONDICIONS::WEAPON_IN_HAND, true);
-  putAwayGun.setPrecondicion(CONDICIONS::GUN_PREPARED, true);
-  putAwayGun.setEffect(CONDICIONS::GUN_PREPARED, false);
-  putAwayGun.setEffect(CONDICIONS::WEAPON_IN_HAND, false);
+  putAwayGun->setPrecondicion(CONDICIONS::WEAPON_IN_HAND, true);
+  putAwayGun->setPrecondicion(CONDICIONS::GUN_PREPARED, true);
+  putAwayGun->setEffect(CONDICIONS::GUN_PREPARED, false);
+  putAwayGun->setEffect(CONDICIONS::WEAPON_IN_HAND, false);
   actions.push_back(putAwayGun);
 
   
-  prepareKnife.setPrecondicion(CONDICIONS::HAS_KNIFE, true);
-  prepareKnife.setPrecondicion(CONDICIONS::WEAPON_IN_HAND, false);
-  prepareKnife.setPrecondicion(CONDICIONS::KNIFE_PREPARED, false);
-  prepareKnife.setEffect(CONDICIONS::KNIFE_PREPARED, true);
-  prepareKnife.setEffect(CONDICIONS::WEAPON_IN_HAND, true);
+  prepareKnife->setPrecondicion(CONDICIONS::HAS_KNIFE, true);
+  prepareKnife->setPrecondicion(CONDICIONS::WEAPON_IN_HAND, false);
+  prepareKnife->setPrecondicion(CONDICIONS::KNIFE_PREPARED, false);
+  prepareKnife->setEffect(CONDICIONS::KNIFE_PREPARED, true);
+  prepareKnife->setEffect(CONDICIONS::WEAPON_IN_HAND, true);
   actions.push_back(prepareKnife);
 
   
-  putAwayKnife.setPrecondicion(CONDICIONS::KNIFE_PREPARED, true);
-  putAwayKnife.setPrecondicion(CONDICIONS::WEAPON_IN_HAND, true);
-  putAwayKnife.setEffect(CONDICIONS::WEAPON_IN_HAND, false);
-  putAwayKnife.setEffect(CONDICIONS::KNIFE_PREPARED, false);
+  putAwayKnife->setPrecondicion(CONDICIONS::KNIFE_PREPARED, true);
+  putAwayKnife->setPrecondicion(CONDICIONS::WEAPON_IN_HAND, true);
+  putAwayKnife->setEffect(CONDICIONS::WEAPON_IN_HAND, false);
+  putAwayKnife->setEffect(CONDICIONS::KNIFE_PREPARED, false);
   actions.push_back(putAwayKnife);
 
   
-  shoot.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
-  shoot.setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
-  shoot.setPrecondicion(CONDICIONS::GUN_PREPARED, true);
-  shoot.setPrecondicion(CONDICIONS::GUN_LOADED, true);
-  shoot.setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, true);
-  shoot.setEffect(CONDICIONS::ENEMY_DEAD, true);
+  shoot->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
+  shoot->setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
+  shoot->setPrecondicion(CONDICIONS::GUN_PREPARED, true);
+  shoot->setPrecondicion(CONDICIONS::GUN_LOADED, true);
+  shoot->setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, true);
+  shoot->setEffect(CONDICIONS::ENEMY_DEAD, true);
   actions.push_back(shoot);
 
   
-  stab.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
-  stab.setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
-  stab.setPrecondicion(CONDICIONS::KNIFE_PREPARED, true);
-  stab.setPrecondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE, true);
-  stab.setEffect(CONDICIONS::ENEMY_DEAD, true);
+  stab->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
+  stab->setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
+  stab->setPrecondicion(CONDICIONS::KNIFE_PREPARED, true);
+  stab->setPrecondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE, true);
+  stab->setEffect(CONDICIONS::ENEMY_DEAD, true);
   actions.push_back(stab);
 
   
-  suicide.setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
-  suicide.setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
-  suicide.setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, true);
-  suicide.setEffect(CONDICIONS::ENEMY_DEAD, true);
-  suicide.setEffect(CONDICIONS::ME_DEAD, true);
+  suicide->setPrecondicion(CONDICIONS::ENEMY_IN_SIGHT, true);
+  suicide->setPrecondicion(CONDICIONS::ENEMY_DEAD, false);
+  suicide->setPrecondicion(CONDICIONS::ENEMY_IN_RANGE, true);
+  suicide->setEffect(CONDICIONS::ENEMY_DEAD, true);
+  suicide->setEffect(CONDICIONS::ME_DEAD, true);
   actions.push_back(suicide);
 }
 
@@ -270,7 +272,7 @@ TEST_F(ActionTest, realTest) {
   currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
   currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
 
-  ASSERT_TRUE(prepareGun.validatePrecondicions(currentWS));
+  ASSERT_TRUE(prepareGun->validatePrecondicions(currentWS));
 }
 
 TEST_F(ActionTest, realTestIncorrect) {
@@ -288,7 +290,7 @@ TEST_F(ActionTest, realTestIncorrect) {
   currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
   currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
 
-  ASSERT_FALSE(putAwayGun.validatePrecondicions(currentWS));
+  ASSERT_FALSE(putAwayGun->validatePrecondicions(currentWS));
 }
 
 TEST_F(ActionTest, noEffects) {
@@ -409,8 +411,8 @@ TEST(PlanTest, effects){
   
 
   auto plans = makeSPtr<PlansGraph>(actions);
-  prepareGun.applyEffects(currentWS);
-  ASSERT_TRUE(patrol.validatePrecondicions(currentWS));
+  prepareGun->applyEffects(currentWS);
+  ASSERT_TRUE(patrol->validatePrecondicions(currentWS));
 }
 
 TEST(PlanTest, basic){
@@ -445,11 +447,11 @@ TEST(PlanTest, basic){
   auto path = searcher.getPath();
   
   auto plan = plans->getPlan(path);
-  for(auto& action : plan){
-    auToolSeetSDK::print(action.getName());
+  for(auto& action : plan->m_actions){
+    auToolSeetSDK::print(action.lock()->getName());
   }
 
-  ASSERT_TRUE(plan.size()!=0);
+  ASSERT_TRUE(plan->m_actions.size()!=0);
 
 }
 

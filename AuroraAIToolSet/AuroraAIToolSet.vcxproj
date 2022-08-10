@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="auDijistra.h" />
     <ClInclude Include="auGoapPlanner.h" />
     <ClInclude Include="include\auAction.h" />
     <ClInclude Include="include\auAStar.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="include\auWorldState.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="auDijistra.cpp" />
     <ClCompile Include="auGoapPlanner.cpp" />
     <ClCompile Include="source\auAction.cpp" />
     <ClCompile Include="source\auAStarGraph.cpp" />

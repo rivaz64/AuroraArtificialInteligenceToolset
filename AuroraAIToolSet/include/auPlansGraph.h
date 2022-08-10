@@ -17,6 +17,8 @@ class AU_UTILITY_EXPORT PlansGraph :
 {
  public:
   
+  PlansGraph() = default;
+
   PlansGraph(Vector<SPtr<Action>>&& actions) :
     m_actions(move(actions)) {}
 
@@ -25,6 +27,12 @@ class AU_UTILITY_EXPORT PlansGraph :
 
   Vector<uint32>
   getAdjacentNodes(uint32 nodeId) override;
+
+  FORCEINLINE void
+  addAction(SPtr<Action> action)
+  {
+    m_actions.push_back(action);
+  }
 
   /**
    * @brief gets the path from a path obtained from a search

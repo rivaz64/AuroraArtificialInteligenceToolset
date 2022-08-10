@@ -9,7 +9,8 @@
 #include "auPrerequisites.h"
 #include "auPathFinder.h"
 
-namespace auToolSeetSDK{
+namespace auToolSeetSDK
+{
 /**
  * @brief node used for building the graph used for AStar search;
 */

@@ -88,7 +88,7 @@ PathFinder::addNode(uint32 newNodeId, WPtr<SearchNode> parentNode)
   auto newNode = makeSPtr<SearchNode>();
   newNode->id = newNodeId;
   newNode->parent = parentNode;
-  addDataToNode(newNode);
+  addDataToNode(newNode,parentNode);
   //newNode->heuristic = m_graph->getHeuristicDistance(newNode);
   //m_graph->getCost(parentNode,newNode);
   m_nodes.push_back(newNode);

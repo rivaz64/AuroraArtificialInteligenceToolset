@@ -45,9 +45,9 @@ class AU_UTILITY_EXPORT Plan
    * @param ws the current world state of the pawn
   */
   PLAN_STATE::E
-  update(WorldState& ws);
+  update(const WorldState& ws);
 
- protected:
+ public:
 
   /**
    * @brief the plans to execute in this order

@@ -14,6 +14,11 @@ Action::applyEffects(WorldState& ws)
   ws.m_mask |= m_effects.m_mask;
   ws.m_condicions = (m_effects.m_mask&m_effects.m_condicions)|((~m_effects.m_mask)&ws.m_condicions);
 }
+bool 
+Action::isCompleted(const WorldState& ws)
+{
+  return m_effects.satisfies(ws);
+}
 bool
 Action::canSolvePlan(WorldState& currentWS, WorldState& goalWS)
 {
