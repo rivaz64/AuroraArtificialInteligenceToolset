@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auDijistra.h" />
-    <ClInclude Include="auGoapPlanner.h" />
     <ClInclude Include="include\auAction.h" />
     <ClInclude Include="include\auAStar.h" />
     <ClInclude Include="include\auBreadthFirstSearch.h" />
     <ClInclude Include="include\auDefines.h" />
+    <ClInclude Include="include\auDijistra.h" />
     <ClInclude Include="include\auForDec.h" />
+    <ClInclude Include="include\auGoapPlanner.h" />
     <ClInclude Include="include\auPathFinder.h" />
     <ClInclude Include="include\auPlan.h" />
     <ClInclude Include="include\auPlansGraph.h" />
@@ -36,11 +36,11 @@
     <ClInclude Include="include\auWorldState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="auDijistra.cpp" />
-    <ClCompile Include="auGoapPlanner.cpp" />
     <ClCompile Include="source\auAction.cpp" />
     <ClCompile Include="source\auAStarGraph.cpp" />
     <ClCompile Include="source\auBreadthFirstSearch.cpp" />
+    <ClCompile Include="source\auDijistra.cpp" />
+    <ClCompile Include="source\auGoapPlanner.cpp" />
     <ClCompile Include="source\auPathFinder.cpp" />
     <ClCompile Include="source\auPlan.cpp" />
     <ClCompile Include="source\auPlansGraph.cpp" />

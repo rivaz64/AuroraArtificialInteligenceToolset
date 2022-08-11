@@ -24,6 +24,11 @@ struct SearchNode{
    * @brief the node that found this one
   */
   WPtr<SearchNode> parent;
+
+  /**
+   * @brief all the extra data for a specific type of search, this is for not having to to child classes of the node
+  */
+  Map<String,float> data;
 };
 
 namespace SEARCH_STATE{
@@ -59,7 +64,7 @@ class AU_UTILITY_EXPORT PathFinder
     m_goalId = goalId;
   }
 
-  FORCEINLINE Vector<uint32>
+  FORCEINLINE Vector<WPtr<SearchNode>>
   getPath()
   {
     return m_path;
@@ -79,7 +84,9 @@ class AU_UTILITY_EXPORT PathFinder
   run()
   {
     reset();
-    addNode(m_sourceId,WPtr<SearchNode>());
+    auto node = makeSPtr<SearchNode>();
+    node->id = m_sourceId;
+    addNode(node,WPtr<SearchNode>());
     auto actualState = SEARCH_STATE::kSearching;
     while(actualState == SEARCH_STATE::kSearching){
       actualState = step();
@@ -136,7 +143,7 @@ class AU_UTILITY_EXPORT PathFinder
    * @param nodeId tthe node to be added
   */
   void 
-  addNode(uint32 newNodeId, WPtr<SearchNode> parentNode);
+  addNode(SPtr<SearchNode> newNodeId, WPtr<SearchNode> parentNode);
 
   /**
    * @brief adds the node to the open list
@@ -149,8 +156,14 @@ class AU_UTILITY_EXPORT PathFinder
    * @brief chooses what to do when finds a node that has been searched at
    * @param node 
   */
-  virtual void
-  analizeNode(WPtr<SearchNode> node, WPtr<SearchNode> newParent) {}
+  //virtual void
+  //analizeNode(WPtr<SearchNode> node, WPtr<SearchNode> newParent) {}
+
+  virtual bool
+  isBetterPath(WPtr<SearchNode> node, WPtr<SearchNode> newParent);
+
+  void 
+  printPath(WPtr<SearchNode> node);
 
   /**
    * @brief from where to start the search
@@ -175,7 +188,7 @@ class AU_UTILITY_EXPORT PathFinder
   /**
    * @brief the path of id nodes
   */
-  Vector<uint32> m_path;
+  Vector<WPtr<SearchNode>> m_path;
 
   /**
    * @brief the paths in wait for search

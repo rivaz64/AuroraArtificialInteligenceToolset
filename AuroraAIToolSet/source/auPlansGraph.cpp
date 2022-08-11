@@ -1,6 +1,7 @@
 #include "auPlansGraph.h"
 #include "auAction.h"
 #include "auPlan.h"
+#include "auPathFinder.h"
 
 namespace auToolSeetSDK
 {
@@ -30,19 +31,22 @@ namespace auToolSeetSDK
 //  }
 //}
 
-Vector<uint32>
-PlansGraph::getAdjacentNodes(uint32 nodeId)
+Vector<SPtr<SearchNode>>
+PlansGraph::getAdjacentNodes(WPtr<SearchNode> wNode)
 {
-  WorldState ws(nodeId);
+  auto node = wNode.lock();
+  WorldState ws(node->id);
   auto numOfActions = m_actions.size();
-  Vector<uint32> adjacents;
+  Vector<SPtr<SearchNode>> adjacents;
+
   for(uint32 i = 0; i<numOfActions; ++i){
     if(m_actions[i]->validatePrecondicions(ws)){
       auto newWS = ws;
       m_actions[i]->applyEffects(newWS);
-      uint32 id = newWS.getId();
-      auto nodeId = id | (i<<28);
-      adjacents.push_back(nodeId);
+      auto newNode = makeSPtr<SearchNode>();
+      newNode->id = newWS.getId();
+      newNode->data["action"] = i;
+      adjacents.push_back(newNode);
     }
   }
 
@@ -50,13 +54,13 @@ PlansGraph::getAdjacentNodes(uint32 nodeId)
 }
 
 SPtr<Plan>
-PlansGraph::getPlan(const Vector<uint32>& path)
+PlansGraph::getPlan(const Vector<WPtr<SearchNode>>& path)
 {
   auto plan = makeSPtr<Plan>();
   auto size = path.size();
 
   for(uint32 i = 0; i<size; ++i){
-    uint32 actionId = path[i]>>28;
+    uint32 actionId = path[i].lock()->data["action"];
     plan->addAction(m_actions[actionId]);
   }
   return plan;
@@ -65,10 +69,10 @@ PlansGraph::getPlan(const Vector<uint32>& path)
 float 
 PlansGraph::getCost(WPtr<SearchNode> wNode1, WPtr<SearchNode> wNode2)
 {
-  //if(!wNode2.expired()){
-  //  auto node = wNode2.lock();
-  //  return m_actions[node->id].getCost();
-  //}
+  if(!wNode2.expired()){
+    auto node = wNode2.lock();
+    return m_actions[node->data["action"]]->getCost();
+  }
   return 0;
   
 }

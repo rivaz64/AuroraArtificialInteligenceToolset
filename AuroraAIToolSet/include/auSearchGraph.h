@@ -23,8 +23,8 @@ class AU_UTILITY_EXPORT SearchGraph
    * @param nodeId the id of node to which they are adjacent
    * @return the ids of the adjacent nodes
   */
-  virtual Vector<uint32>
-  getAdjacentNodes(uint32 nodeId)
+  virtual Vector<SPtr<SearchNode>>
+  getAdjacentNodes(WPtr<SearchNode> nodeId)
   {
     return {};
   }

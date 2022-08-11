@@ -25,5 +25,5 @@ C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolS
               T=auToolSeetSDK::Action,
               _Ty=int
           ]
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(37): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> auToolSeetSDK::makeSPtr<auToolSeetSDK::Action,const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(40): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> auToolSeetSDK::makeSPtr<auToolSeetSDK::Action,const char(&)[7],int>(const char (&)[7],int &&)' being compiled
   Sample-Test1.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\Sample-Test1.exe

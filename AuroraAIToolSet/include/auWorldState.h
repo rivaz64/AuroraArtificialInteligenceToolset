@@ -219,7 +219,7 @@ class AU_UTILITY_EXPORT WorldState
   /**
    * @brief the condicions in the world that can be true or not
   */
-  uint32 m_condicions;
+  uint32 m_condicions = 0;
 
   
 

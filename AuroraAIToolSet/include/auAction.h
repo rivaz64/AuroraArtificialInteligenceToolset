@@ -145,7 +145,7 @@ class AU_UTILITY_EXPORT Action
     return m_name;
   }
 
- private:
+ protected:
 
   /**
    * @brief to identify this action

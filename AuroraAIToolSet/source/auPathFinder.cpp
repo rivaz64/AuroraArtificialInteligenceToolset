@@ -1,6 +1,9 @@
 #include "auPathFinder.h"
 #include "auSearchGraph.h"
 
+#include "auPlansGraph.h"
+#include "auPlan.h"
+
 namespace auToolSeetSDK
 {
 
@@ -22,6 +25,7 @@ PathFinder::step()
     return SEARCH_STATE::kFailed;
   }
   auto wNode = getNextNodeForSearch();
+  printPath(wNode);
   if(wNode.expired()){
     return SEARCH_STATE::kFailed;
   }
@@ -30,27 +34,36 @@ PathFinder::step()
     makePath(actualNode);
     return SEARCH_STATE::kPathFinded;
   }
-  auto adjacents = graph->getAdjacentNodes(actualNode->id);
-  for(auto& adjacentId : adjacents){
+
+  auto adjacents = graph->getAdjacentNodes(actualNode);
+  for(auto& adjacent : adjacents){
     WPtr<SearchNode> adjacentNode;
+
     for(auto& otherNode : m_nodes){
-      if(otherNode->id == adjacentId){
+      if(otherNode->id == adjacent->id){
         adjacentNode = otherNode;
       }
     }
+
+    //if it has not been searched before
     if(adjacentNode.expired()){
-      addNode(adjacentId,actualNode);
+      addNode(adjacent,actualNode);
     }
-    else{
-      analizeNode(adjacentNode,actualNode);
+
+    //if this other path is better
+    else if(isBetterPath(adjacentNode,actualNode)){
+      auto it = m_openList.begin();
+      for(;it != m_openList.end(); ++it){
+        if(it->lock()->id == adjacentNode.lock()->id){
+          break;
+        }
+      }
+      if(it != m_openList.end()){
+        m_openList.erase(it);
+      }
+      addDataToNode(adjacentNode,actualNode);
+      addNodeToOpenList(adjacentNode);
     }
-    //else if(isBetterPath(adjacentNode,actualNode)){
-    //  //auto it = find(m_openList.begin(),m_openList.end(),adjacentId);
-    //  //if(it != m_openList.end()){
-    //  //  m_openList.erase(it);
-    //  //}
-    //  
-    //}
   }
   return SEARCH_STATE::kSearching;
 }
@@ -75,7 +88,7 @@ PathFinder::makePath(WPtr<SearchNode> lastNode)
   auto wNode = lastNode;
   while(!wNode.expired()){
     auto node = wNode.lock();
-    m_path.push_back(node->id);
+    m_path.push_back(node);
     wNode = node->parent;
   }
   m_path.pop_back();
@@ -83,16 +96,44 @@ PathFinder::makePath(WPtr<SearchNode> lastNode)
 }
 
 void 
-PathFinder::addNode(uint32 newNodeId, WPtr<SearchNode> parentNode)
+PathFinder::addNode(SPtr<SearchNode> newNode, WPtr<SearchNode> parentNode)
 {
-  auto newNode = makeSPtr<SearchNode>();
-  newNode->id = newNodeId;
   newNode->parent = parentNode;
   addDataToNode(newNode,parentNode);
-  //newNode->heuristic = m_graph->getHeuristicDistance(newNode);
-  //m_graph->getCost(parentNode,newNode);
   m_nodes.push_back(newNode);
   addNodeToOpenList(newNode);
+}
+
+bool 
+PathFinder::isBetterPath(WPtr<SearchNode> node, WPtr<SearchNode> newParent)
+{
+  return false;
+}
+
+void 
+PathFinder::printPath(WPtr<SearchNode> node)
+{
+  auto wNode = node;
+  Vector<WPtr<SearchNode>> path;
+  while(!wNode.expired()){
+    auto node = wNode.lock();
+    path.push_back(node);
+    wNode = node->parent;
+  }
+  path.pop_back();
+  std::reverse(path.begin(),path.end());
+
+  for(auto& action : path){
+
+    print(std::to_string(action.lock()->data["cost"]));
+  }
+
+  auto plan = cast<PlansGraph>(m_graph.lock())->getPlan(path);
+
+  for(auto& action : plan->m_actions){
+    print(action.lock()->getName());
+  }
+  print("");
 }
 
 }

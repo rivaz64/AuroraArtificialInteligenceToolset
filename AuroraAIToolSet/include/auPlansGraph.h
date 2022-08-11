@@ -12,6 +12,8 @@
 namespace auToolSeetSDK
 {
 
+
+
 class AU_UTILITY_EXPORT PlansGraph :
   public SearchGraph
 {
@@ -25,8 +27,8 @@ class AU_UTILITY_EXPORT PlansGraph :
   PlansGraph(const Vector<SPtr<Action>>& actions) :
     m_actions(actions) {}
 
-  Vector<uint32>
-  getAdjacentNodes(uint32 nodeId) override;
+  Vector<SPtr<SearchNode>>
+  getAdjacentNodes(WPtr<SearchNode> node) override;
 
   FORCEINLINE void
   addAction(SPtr<Action> action)
@@ -40,7 +42,7 @@ class AU_UTILITY_EXPORT PlansGraph :
    * @return a plan of actions
   */
   SPtr<Plan>
-  getPlan(const Vector<uint32>& path);
+  getPlan(const Vector<WPtr<SearchNode>>& path);
 
   float
   getCost(WPtr<SearchNode> node1, WPtr<SearchNode> node2) override;

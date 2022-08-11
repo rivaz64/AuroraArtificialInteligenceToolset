@@ -54,10 +54,10 @@
     <ClInclude Include="include\auPlan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="auGoapPlanner.h">
+    <ClInclude Include="include\auDijistra.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="auDijistra.h">
+    <ClInclude Include="include\auGoapPlanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,10 +86,10 @@
     <ClCompile Include="source\auPlan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="auGoapPlanner.cpp">
+    <ClCompile Include="source\auDijistra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="auDijistra.cpp">
+    <ClCompile Include="source\auGoapPlanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
