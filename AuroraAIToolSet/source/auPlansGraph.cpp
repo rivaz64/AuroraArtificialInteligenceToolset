@@ -6,31 +6,6 @@
 namespace auToolSeetSDK
 {
 
-//void 
-//PlansGraph::buildGraph(Vector<Action>& actions)
-//{
-//  m_actions = actions;
-//  auto numOfActions = actions.size();
-//
-//  m_graph.resize(numOfActions);
-//  for(auto& row : m_graph){
-//    row.resize(numOfActions);
-//  }
-//
-//  for(uint32 precondicionNum = 0; precondicionNum<numOfActions; ++precondicionNum){
-//    for(uint32 effectNum = 0; effectNum<numOfActions; ++effectNum){
-//      if(precondicionNum == effectNum) continue;
-//
-//      auto& precondicion = actions[precondicionNum].getPrecondicions();
-//      auto& effects = actions[effectNum].getEffects();
-//
-//      if(precondicion.getNumOfDiferences(effects) == 0){
-//        m_graph[precondicionNum][effectNum] = true;
-//      }
-//    }
-//  }
-//}
-
 Vector<SPtr<SearchNode>>
 PlansGraph::getAdjacentNodes(WPtr<SearchNode> wNode)
 {
@@ -63,6 +38,8 @@ PlansGraph::getPlan(const Vector<WPtr<SearchNode>>& path)
     uint32 actionId = path[i].lock()->data["action"];
     plan->addAction(m_actions[actionId]);
   }
+  plan->invert();
+  
   return plan;
 }
 
@@ -92,7 +69,6 @@ PlansGraph::isAtGoal(uint32 nodeId, uint32 goal)
 {
   WorldState ws(nodeId);
   WorldState goalWS(goal);
-  //String action = m_actions[nodeId>>28]->getName();
   return goalWS.satisfies(ws);
 }
 

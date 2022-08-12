@@ -34,6 +34,13 @@ class AU_UTILITY_EXPORT Plan
     m_actions.push_back(action);
   }
 
+  FORCEINLINE void
+  invert()
+  {
+    std::reverse(m_actions.begin(),m_actions.end());
+    
+  }
+
   /**
    * @brief starts executing this plan
   */

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="auPlansGraphInverse.h" />
     <ClInclude Include="include\auAction.h" />
     <ClInclude Include="include\auAStar.h" />
     <ClInclude Include="include\auBreadthFirstSearch.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="include\auPathFinder.h" />
     <ClInclude Include="include\auPlan.h" />
     <ClInclude Include="include\auPlansGraph.h" />
+    <ClInclude Include="include\auPlansGraphInverse.h" />
     <ClInclude Include="include\auPlatformTypes.h" />
     <ClInclude Include="include\auPrerequisites.h" />
     <ClInclude Include="include\auSearchGraph.h" />
@@ -44,6 +46,7 @@
     <ClCompile Include="source\auPathFinder.cpp" />
     <ClCompile Include="source\auPlan.cpp" />
     <ClCompile Include="source\auPlansGraph.cpp" />
+    <ClCompile Include="source\auPlansGraphInverse.cpp" />
     <ClCompile Include="source\auSearchGraph.cpp" />
     <ClCompile Include="source\auWorldState.cpp" />
   </ItemGroup>

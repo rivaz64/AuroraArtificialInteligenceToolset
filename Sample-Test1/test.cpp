@@ -3,6 +3,7 @@
 #include "auWorldState.h"
 #include "auAction.h"
 #include "auPlansGraph.h"
+#include "auPlansGraphInverse.h"
 #include "auBreadthFirstSearch.h"
 #include "auPlan.h"
 #include "auDijistra.h"
@@ -10,6 +11,7 @@
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
 using auToolSeetSDK::PlansGraph;
+using auToolSeetSDK::PlansGraphInverse;
 using auToolSeetSDK::Vector;
 using auToolSeetSDK::BreadthFirstSearch;
 using auToolSeetSDK::makeSPtr;
@@ -399,7 +401,7 @@ TEST(GraphTest, adjacentNodesAdvanced){
   ASSERT_TRUE(adjacents.size()==2);
 }
 
-TEST(PlanTest, effects){
+TEST(GraphTest, effects){
 
   WorldState currentWS;
   currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
@@ -420,6 +422,19 @@ TEST(PlanTest, effects){
   auto plans = makeSPtr<PlansGraph>(actions);
   prepareGun->applyEffects(currentWS);
   ASSERT_TRUE(patrol->validatePrecondicions(currentWS));
+}
+
+TEST(GraphTest, inverse){
+  WorldState goalWS;
+  goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
+  goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
+  goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+
+  auto plans = makeSPtr<PlansGraphInverse>(actions);
+  auto node = makeSPtr<SearchNode>();
+  node->id = goalWS.getId();
+  auto adjacents = plans->getAdjacentNodes(node);
+  ASSERT_TRUE(adjacents.size()==2);
 }
 
 TEST(PlanTest, basic){
@@ -449,16 +464,16 @@ TEST(PlanTest, basic){
   //ASSERT_FALSE(adjacents.size()==0);
    
   
-  //BreadthFirstSearch searcher;
-  //searcher.setGraph(plans);
-  //searcher.setSourceId(currentWS.getId());
-  //searcher.setGoalId(goalWS.getId());
-  //auto result = searcher.run();
-  //auto path = searcher.getPath();
-  //
-  //auto plan = plans->getPlan(path);
-  //
-  //ASSERT_TRUE(plan->m_actions.size()!=0);
+  BreadthFirstSearch searcher;
+  searcher.setGraph(plans);
+  searcher.setSourceId(currentWS.getId());
+  searcher.setGoalId(goalWS.getId());
+  auto result = searcher.run();
+  auto path = searcher.getPath();
+  
+  auto plan = plans->getPlan(path);
+  
+  ASSERT_TRUE(plan->m_actions.size()!=0);
 
 }
 
@@ -493,6 +508,46 @@ TEST(PlanTest, cost){
   auto path = searcher.getPath();
   
   auto plan = plans->getPlan(path);
+  
+  ASSERT_TRUE(plan->m_actions.size()!=0);
+
+}
+
+TEST(PlanTest, inverse){
+
+  WorldState currentWS;
+  currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
+  currentWS.setCondicion(CONDICIONS::ENEMY_DEAD,false);
+  currentWS.setCondicion(CONDICIONS::ENEMY_IN_RANGE,false);
+  currentWS.setCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE,false);
+  currentWS.setCondicion(CONDICIONS::HAS_KNIFE,true);
+  currentWS.setCondicion(CONDICIONS::HAS_GUN,true);
+  currentWS.setCondicion(CONDICIONS::GUN_PREPARED,false);
+  currentWS.setCondicion(CONDICIONS::GUN_LOADED,false);
+  currentWS.setCondicion(CONDICIONS::HAS_BULLETS,true);
+  currentWS.setCondicion(CONDICIONS::KNIFE_PREPARED,false);
+  currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
+  currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
+
+  WorldState goalWS;
+  goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
+  goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
+  goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+
+  auto plans = makeSPtr<PlansGraphInverse>(actions);
+
+  Dijistra searcher;
+  searcher.setGraph(plans);
+  searcher.setSourceId(goalWS.getId());
+  searcher.setGoalId(currentWS.getId());
+  auto result = searcher.run();
+  auto path = searcher.getPath();
+  
+  auto plan = plans->getPlan(path);
+
+  for(auto& action : plan->m_actions){
+    auToolSeetSDK::print(action.lock()->getName());
+  }
 
   ASSERT_TRUE(plan->m_actions.size()!=0);
 

@@ -1,16 +1,14 @@
-﻿  auAStarGraph.cpp
-  auAction.cpp
-  auBreadthFirstSearch.cpp
+﻿  auBreadthFirstSearch.cpp
   auDijistra.cpp
   auGoapPlanner.cpp
   auPathFinder.cpp
-  auPlan.cpp
   auPlansGraph.cpp
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(48,33): warning C4244: '=': conversion from 'auToolSeetSDK::uint32' to 'float', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(63,21): warning C4244: 'initializing': conversion from 'float' to 'auToolSeetSDK::uint32', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(74,41): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
-  auSearchGraph.cpp
-  auWorldState.cpp
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auWorldState.cpp(51,10): warning C4244: 'return': conversion from '__int64' to 'auToolSeetSDK::uint32', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(23,33): warning C4244: '=': conversion from 'auToolSeetSDK::uint32' to 'float', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(38,21): warning C4244: 'initializing': conversion from 'float' to 'auToolSeetSDK::uint32', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraph.cpp(51,41): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+  auPlansGraphInverse.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraphInverse.cpp(23,33): warning C4244: '=': conversion from 'auToolSeetSDK::uint32' to 'float', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\source\auPlansGraphInverse.cpp(46,21): warning C4244: 'initializing': conversion from 'float' to 'auToolSeetSDK::uint32', possible loss of data
   Generating Code...
+     Creating library C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.lib and object C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.exp
   AuroraAIToolSet.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.dll

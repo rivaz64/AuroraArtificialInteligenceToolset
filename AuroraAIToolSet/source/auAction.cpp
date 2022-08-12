@@ -19,13 +19,13 @@ Action::isCompleted(const WorldState& ws)
 {
   return m_effects.satisfies(ws);
 }
-bool
-Action::canSolvePlan(WorldState& currentWS, WorldState& goalWS)
+
+void 
+Action::undo(WorldState& ws)
 {
-  //auto mask = m_effects.getMask()&currentWS.getMask()&goalWS.getMask();
-  //auto condicions = mask&(currentWS.getWorldState()^goalWS.getWorldState());
-  //return condicions;
-  return false;
+  ws.m_mask &= ~m_effects.m_mask;
+  ws.m_mask |= m_preconditions.m_mask;
+  ws.m_condicions = (m_preconditions.m_mask&m_preconditions.m_condicions)|((~m_preconditions.m_mask)&ws.m_condicions);
 }
 
 void

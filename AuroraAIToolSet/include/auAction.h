@@ -73,13 +73,10 @@ class AU_UTILITY_EXPORT Action
   isCompleted(const WorldState& ws);
 
   /**
-   * @brief si esta accoon va a resolver cualquiera de las condiciones
-   * @param currentWS 
-   * @param goalWS 
-   * @return 
+   * @brief returns the world state of the action before being done
   */
-  bool
-  canSolvePlan(WorldState& currentWS, WorldState& goalWS);
+  void
+  undo(WorldState& ws);
 
   /**
    * @brief solves a world state to how it would be before executing the action

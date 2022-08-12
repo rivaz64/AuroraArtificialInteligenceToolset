@@ -60,6 +60,12 @@
     <ClInclude Include="include\auGoapPlanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="auPlansGraphInverse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\auPlansGraphInverse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\auAction.cpp">
@@ -90,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\auGoapPlanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\auPlansGraphInverse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

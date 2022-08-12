@@ -162,8 +162,8 @@ class AU_UTILITY_EXPORT PathFinder
   virtual bool
   isBetterPath(WPtr<SearchNode> node, WPtr<SearchNode> newParent);
 
-  void 
-  printPath(WPtr<SearchNode> node);
+  //void 
+  //printPath(WPtr<SearchNode> node);
 
   /**
    * @brief from where to start the search
