@@ -1,8 +1,8 @@
 #include "auPathFinder.h"
 #include "auSearchGraph.h"
 
-//#include "auPlansGraph.h"
-//#include "auPlan.h"
+#include "auPlansGraph.h"
+#include "auPlan.h"
 
 namespace auToolSeetSDK
 {
@@ -25,12 +25,12 @@ PathFinder::step()
     return SEARCH_STATE::kFailed;
   }
   auto wNode = getNextNodeForSearch();
-  //printPath(wNode);
+  printPath(wNode);
   if(wNode.expired()){
     return SEARCH_STATE::kFailed;
   }
   auto actualNode = wNode.lock();
-  if(graph->isAtGoal(actualNode->id,m_goalId)){
+  if(graph->isAtGoal(actualNode,m_goalId)){
     makePath(actualNode);
     return SEARCH_STATE::kPathFinded;
   }
@@ -109,30 +109,30 @@ PathFinder::isBetterPath(WPtr<SearchNode> node, WPtr<SearchNode> newParent)
   return false;
 }
 
-//void 
-//PathFinder::printPath(WPtr<SearchNode> node)
-//{
-//  auto wNode = node;
-//  Vector<WPtr<SearchNode>> path;
-//  while(!wNode.expired()){
-//    auto node = wNode.lock();
-//    path.push_back(node);
-//    wNode = node->parent;
-//  }
-//  path.pop_back();
-//  std::reverse(path.begin(),path.end());
-//
-//  //for(auto& action : path){
-//  //  print(std::to_string(action.lock()->data["cost"]));
-//  //}
-//
-//  auto plan = cast<PlansGraph>(m_graph.lock())->getPlan(path);
-//
-//  for(auto& action : plan->m_actions){
-//    print(action.lock()->getName());
-//  }
-//  print("");
-//}
+void 
+PathFinder::printPath(WPtr<SearchNode> node)
+{
+  auto wNode = node;
+  Vector<WPtr<SearchNode>> path;
+  while(!wNode.expired()){
+    auto node = wNode.lock();
+    path.push_back(node);
+    wNode = node->parent;
+  }
+  path.pop_back();
+  std::reverse(path.begin(),path.end());
+
+  //for(auto& action : path){
+  //  print(std::to_string(action.lock()->data["cost"]));
+  //}
+
+  auto plan = cast<PlansGraph>(m_graph.lock())->getPlan(path);
+
+  for(auto& action : plan->m_actions){
+    print(action.lock()->getName());
+  }
+  print("");
+}
 
 }
 

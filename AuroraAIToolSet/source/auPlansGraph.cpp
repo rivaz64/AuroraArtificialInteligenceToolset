@@ -55,19 +55,17 @@ PlansGraph::getCost(WPtr<SearchNode> wNode1, WPtr<SearchNode> wNode2)
 }
 
 float
-PlansGraph::getHeuristicDistance(WPtr<SearchNode> wNode)
+PlansGraph::getHeuristicDistance(WPtr<SearchNode> node, WPtr<SearchNode> goal)
 {
-  //if(wNode.expired()){
-    return 0.0f;
-  //}
-  //auto node = wNode.lock();
-  //auto action = m_actions[node->id];
+  WorldState ws(node.lock()->id);
+  WorldState goalWS(goal.lock()->id);
+  return goalWS.getNumOfUnsatisfiedCondicion(ws);
 }
 
 bool 
-PlansGraph::isAtGoal(uint32 nodeId, uint32 goal)
+PlansGraph::isAtGoal(WPtr<SearchNode> node, uint32 goal)
 {
-  WorldState ws(nodeId);
+  WorldState ws(node.lock()->id);
   WorldState goalWS(goal);
   return goalWS.satisfies(ws);
 }

@@ -45,11 +45,11 @@ class AU_UTILITY_EXPORT PlansGraph :
   float
   getCost(WPtr<SearchNode> node1, WPtr<SearchNode> node2) override;
 
-  float
-  getHeuristicDistance(WPtr<SearchNode> node) override;
+  virtual float
+  getHeuristicDistance(WPtr<SearchNode> node, WPtr<SearchNode> goal) override;
 
   virtual bool
-  isAtGoal(uint32 nodeId, uint32 goal) override;
+  isAtGoal(WPtr<SearchNode> node, uint32 goal) override;
 
  protected:
 

@@ -28,10 +28,18 @@ PlansGraphInverse::getAdjacentNodes(WPtr<SearchNode> wNode)
   return adjacents;
 }
 
-bool 
-PlansGraphInverse::isAtGoal(uint32 nodeId, uint32 goal)
+float 
+PlansGraphInverse::getHeuristicDistance(WPtr<SearchNode> node, WPtr<SearchNode> goal)
 {
-  WorldState ws(nodeId);
+  WorldState ws(node.lock()->id);
+  WorldState goalWS(goal.lock()->id);
+  return ws.getNumOfUnsatisfiedCondicion(goalWS);
+}
+
+bool 
+PlansGraphInverse::isAtGoal(WPtr<SearchNode> node, uint32 goal)
+{
+  WorldState ws(node.lock()->id);
   WorldState goalWS(goal);
   return ws.satisfies(goalWS);
 }

@@ -1,12 +1,13 @@
 #include "auSearchGraph.h"
+#include "auPathFinder.h"
 
 namespace auToolSeetSDK
 {
 
 bool 
-SearchGraph::isAtGoal(uint32 nodeId, uint32 goal)
+SearchGraph::isAtGoal(WPtr<SearchNode> node, uint32 goal)
 {
-  return nodeId == goal;
+  return node.lock()->id == goal;
 }
 
 }

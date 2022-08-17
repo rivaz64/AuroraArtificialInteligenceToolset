@@ -7,6 +7,7 @@
 #include "auBreadthFirstSearch.h"
 #include "auPlan.h"
 #include "auDijistra.h"
+#include "auAStar.h"
 
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
@@ -18,6 +19,7 @@ using auToolSeetSDK::makeSPtr;
 using auToolSeetSDK::SPtr;
 using auToolSeetSDK::SearchNode;
 using auToolSeetSDK::Dijistra;
+using auToolSeetSDK::AStar;
 
 namespace CONDICIONS
 {
@@ -174,6 +176,36 @@ class ActionTest : public ::testing::Test
 {
   protected:
     Action act;
+};
+
+class SearchTest : public ::testing::Test
+{
+  public:
+
+    WorldState currentWS;
+    WorldState goalWS;
+
+    SearchTest()
+    {
+      currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
+      currentWS.setCondicion(CONDICIONS::ENEMY_DEAD,false);
+      currentWS.setCondicion(CONDICIONS::ENEMY_IN_RANGE,false);
+      currentWS.setCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE,false);
+      currentWS.setCondicion(CONDICIONS::HAS_KNIFE,true);
+      currentWS.setCondicion(CONDICIONS::HAS_GUN,true);
+      currentWS.setCondicion(CONDICIONS::GUN_PREPARED,false);
+      currentWS.setCondicion(CONDICIONS::GUN_LOADED,false);
+      currentWS.setCondicion(CONDICIONS::HAS_BULLETS,true);
+      currentWS.setCondicion(CONDICIONS::KNIFE_PREPARED,false);
+      currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
+      currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
+    
+      goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
+      goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
+      goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+    }
+
+    
 };
 
 TEST_F(WorldStateTest, same) {
@@ -437,32 +469,9 @@ TEST(GraphTest, inverse){
   ASSERT_TRUE(adjacents.size()==2);
 }
 
-TEST(PlanTest, basic){
-
-  WorldState currentWS;
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_DEAD,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::HAS_KNIFE,true);
-  currentWS.setCondicion(CONDICIONS::HAS_GUN,true);
-  currentWS.setCondicion(CONDICIONS::GUN_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::GUN_LOADED,false);
-  currentWS.setCondicion(CONDICIONS::HAS_BULLETS,true);
-  currentWS.setCondicion(CONDICIONS::KNIFE_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
-  currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
-
-  WorldState goalWS;
-  goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
-  goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
-  goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+TEST_F(SearchTest, basic){
 
   auto plans = makeSPtr<PlansGraph>(actions);
-
-  //auto adjacents = plans->getAdjacentNodes(currentWS.getId());
-  //ASSERT_FALSE(adjacents.size()==0);
-   
   
   BreadthFirstSearch searcher;
   searcher.setGraph(plans);
@@ -477,26 +486,7 @@ TEST(PlanTest, basic){
 
 }
 
-TEST(PlanTest, cost){
-
-  WorldState currentWS;
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_DEAD,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::HAS_KNIFE,true);
-  currentWS.setCondicion(CONDICIONS::HAS_GUN,true);
-  currentWS.setCondicion(CONDICIONS::GUN_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::GUN_LOADED,false);
-  currentWS.setCondicion(CONDICIONS::HAS_BULLETS,true);
-  currentWS.setCondicion(CONDICIONS::KNIFE_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
-  currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
-
-  WorldState goalWS;
-  goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
-  goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
-  goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+TEST_F(SearchTest, cost){
 
   auto plans = makeSPtr<PlansGraph>(actions);
 
@@ -513,26 +503,7 @@ TEST(PlanTest, cost){
 
 }
 
-TEST(PlanTest, inverse){
-
-  WorldState currentWS;
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_SIGHT,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_DEAD,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::ENEMY_IN_CLOSE_RANGE,false);
-  currentWS.setCondicion(CONDICIONS::HAS_KNIFE,true);
-  currentWS.setCondicion(CONDICIONS::HAS_GUN,true);
-  currentWS.setCondicion(CONDICIONS::GUN_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::GUN_LOADED,false);
-  currentWS.setCondicion(CONDICIONS::HAS_BULLETS,true);
-  currentWS.setCondicion(CONDICIONS::KNIFE_PREPARED,false);
-  currentWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,false);
-  currentWS.setCondicion(CONDICIONS::ME_DEAD,false);
-
-  WorldState goalWS;
-  goalWS.setCondicion(CONDICIONS::ENEMY_DEAD,true);
-  goalWS.setCondicion(CONDICIONS::ME_DEAD,false);
-  goalWS.setCondicion(CONDICIONS::WEAPON_IN_HAND,true);
+TEST_F(SearchTest, inverse){
 
   auto plans = makeSPtr<PlansGraphInverse>(actions);
 
@@ -545,15 +516,45 @@ TEST(PlanTest, inverse){
   
   auto plan = plans->getPlan(path);
 
-  for(auto& action : plan->m_actions){
-    auToolSeetSDK::print(action.lock()->getName());
-  }
+  ASSERT_TRUE(plan->m_actions.size()!=0);
+
+}
+
+TEST_F(SearchTest, astarBasic){
+
+  auto plans = makeSPtr<PlansGraph>(actions);
+
+  AStar searcher;
+  searcher.setGraph(plans);
+  searcher.setSourceId(currentWS.getId());
+  searcher.setGoalId(goalWS.getId());
+  auto result = searcher.run();
+
+  auto path = searcher.getPath();
+  
+  auto plan = plans->getPlan(path);
 
   ASSERT_TRUE(plan->m_actions.size()!=0);
 
 }
 
+TEST_F(SearchTest, astarReverse){
 
+  auto plans = makeSPtr<PlansGraphInverse>(actions);
+
+  AStar searcher;
+  searcher.setGraph(plans);
+  searcher.setSourceId(goalWS.getId());
+  searcher.setGoalId(currentWS.getId());
+  auto result = searcher.run();
+
+  auto path = searcher.getPath();
+  
+  auto plan = plans->getPlan(path);
+
+  ASSERT_TRUE(plan->m_actions.size()!=0);
+
+}
 
 
 
