@@ -19,11 +19,14 @@ Plan::execute()
 PLAN_STATE::E 
 Plan::update(const WorldState& ws)
 {
+  if(m_actions.size()==0) return PLAN_STATE::kFailed;
+  if(m_actions.size()==m_actualAction) return PLAN_STATE::kCompleted;
   auto wAction = m_actions[m_actualAction];
   if(wAction.expired()) return PLAN_STATE::kFailed;
   auto action = wAction.lock();
 
   if(action->isCompleted(ws)){
+    action->deactivate();
     ++m_actualAction;
     if(m_actualAction == m_actions.size()){
       return PLAN_STATE::kCompleted;
