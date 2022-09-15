@@ -8,6 +8,7 @@
 #include "auPlan.h"
 #include "auDijistra.h"
 #include "auAStar.h"
+#include "Situation.h"
 
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
@@ -20,6 +21,8 @@ using auToolSeetSDK::SPtr;
 using auToolSeetSDK::SearchNode;
 using auToolSeetSDK::Dijistra;
 using auToolSeetSDK::AStar;
+using auToolSeetSDK::Situation;
+//using auToolSeetSDK::WorldSituation;
 
 namespace CONDICIONS
 {
@@ -52,6 +55,17 @@ SPtr<Action> putAwayKnife = makeSPtr<Action>("putAwayKnife",1);
 SPtr<Action> shoot = makeSPtr<Action>("shoot",3);
 SPtr<Action> stab = makeSPtr<Action>("stab",3);
 SPtr<Action> suicide = makeSPtr<Action>("suicide",30);
+
+namespace SITUATIONS
+{
+enum E{
+  THIRSTY,
+  AT,
+  ABOVE,
+  HAS,
+  ON
+};
+}
 
 void 
 defineCondicions()
@@ -206,6 +220,45 @@ class SearchTest : public ::testing::Test
     }
 
     
+};
+
+namespace auToolSeetSDK
+{
+struct Thirsty : public Situation
+{
+  Thirsty(Character* character) : m_character(character){}
+  Character* m_character;
+};
+
+struct At : public Situation
+{
+  At(Character* character, Place* place) : m_character(character), m_place(place){}
+  Character* m_character;
+  Place* m_place;
+};
+}
+
+class ProceduralNarrativeTest : public ::testing::Test
+{
+public:
+  ProceduralNarrativeTest()
+  {
+    //s.situationId = SITUATIONS::THIRSTY;
+    //s.values.push_back(&a);
+    //s0.situationId = SITUATIONS::AT;
+    //s0.values.push_back(&a);
+    //s0.values.push_back(&shore_left);
+    //
+    //intro.add(s);
+    //intro.add(s0);
+  }
+
+  //Situation s,s0;
+  //WorldSituation intro;
+  auToolSeetSDK::Character ant;
+  auToolSeetSDK::Place shore_left,stream;
+  //auToolSeetSDK::Thirsty(&ant);
+  //auToolSeetSDK::At(&ant,&shore_left);
 };
 
 TEST_F(WorldStateTest, same) {
@@ -556,5 +609,13 @@ TEST_F(SearchTest, astarReverse){
 
 }
 
-
+//TEST_F(ProceduralNarrativeTest, situationTrue)
+//{
+//  ASSERT_TRUE(intro.isTrue(Situation(SITUATIONS::AT,{(void*)&a,(void*)&shore_left})));
+//}
+//
+//TEST_F(ProceduralNarrativeTest, situationFalse)
+//{
+//  ASSERT_FALSE(intro.isTrue(Situation(SITUATIONS::AT,{(void*)&a,(void*)&stream})));
+//}
 

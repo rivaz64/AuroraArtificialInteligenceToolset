@@ -36,9 +36,11 @@
     <ClInclude Include="include\auSearchGraph.h" />
     <ClInclude Include="include\auSTDHeaders.h" />
     <ClInclude Include="include\auWorldState.h" />
+    <ClInclude Include="include\Situation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\auAStar.cpp" />
+    <ClCompile Include="Situation.cpp" />
     <ClCompile Include="source\auAction.cpp" />
     <ClCompile Include="source\auAStarGraph.cpp" />
     <ClCompile Include="source\auBreadthFirstSearch.cpp" />

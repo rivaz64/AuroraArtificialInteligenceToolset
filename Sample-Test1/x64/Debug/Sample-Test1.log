@@ -1,20 +1,20 @@
 ﻿  test.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(149,77): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
+E:\VS\IDE\VC\Tools\MSVC\14.29.30133\include\xutility(149,77): warning C4244: 'argument': conversion from '_Ty' to 'float', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2014): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char(&)[7],int>(_Ty &,const char (&)[7],int &&) noexcept(false)' being compiled
+E:\VS\IDE\VC\Tools\MSVC\14.29.30133\include\memory(2014): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,const char(&)[7],int>(_Ty &,const char (&)[7],int &&) noexcept(false)' being compiled
           with
           [
               _Ty=auToolSeetSDK::Action
           ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+E:\VS\IDE\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
           with
           [
               _Ty=auToolSeetSDK::Action
           ]
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+E:\VS\IDE\VC\Tools\MSVC\14.29.30133\include\memory(2726): message : see reference to function template instantiation 'std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<const char(&)[7],int>(const char (&)[7],int &&)' being compiled
           with
           [
               _Ty=auToolSeetSDK::Action
@@ -25,5 +25,5 @@ C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolS
               T=auToolSeetSDK::Action,
               _Ty=int
           ]
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(44): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> auToolSeetSDK::makeSPtr<auToolSeetSDK::Action,const char(&)[7],int>(const char (&)[7],int &&)' being compiled
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(47): message : see reference to function template instantiation 'std::shared_ptr<auToolSeetSDK::Action> auToolSeetSDK::makeSPtr<auToolSeetSDK::Action,const char(&)[7],int>(const char (&)[7],int &&)' being compiled
   Sample-Test1.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\Sample-Test1.exe

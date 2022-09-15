@@ -66,6 +66,9 @@
     <ClInclude Include="include\auPlansGraphInverse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Situation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\auAction.cpp">
@@ -99,6 +102,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\auPlansGraphInverse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\auAStar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Situation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
