@@ -25,7 +25,7 @@ PathFinder::step()
     return SEARCH_STATE::kFailed;
   }
   auto wNode = getNextNodeForSearch();
-  printPath(wNode);
+  //printPath(wNode);
   if(wNode.expired()){
     return SEARCH_STATE::kFailed;
   }
@@ -128,10 +128,10 @@ PathFinder::printPath(WPtr<SearchNode> node)
 
   auto plan = cast<PlansGraph>(m_graph.lock())->getPlan(path);
 
-  for(auto& action : plan->m_actions){
-    print(action.lock()->getName());
-  }
-  print("");
+  //for(auto& action : plan->m_actions){
+  //  print(action.lock()->getName());
+  //}
+  //print("");
 }
 
 }

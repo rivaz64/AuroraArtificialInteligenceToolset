@@ -21,12 +21,18 @@
   <ItemGroup>
     <ClInclude Include="auPlansGraphInverse.h" />
     <ClInclude Include="include\auAction.h" />
+    <ClInclude Include="include\auAlgorithms.h" />
     <ClInclude Include="include\auAStar.h" />
     <ClInclude Include="include\auBreadthFirstSearch.h" />
+    <ClInclude Include="include\auCharacter.h" />
+    <ClInclude Include="include\auCondicion.h" />
     <ClInclude Include="include\auDefines.h" />
     <ClInclude Include="include\auDijistra.h" />
+    <ClInclude Include="include\auEffect.h" />
     <ClInclude Include="include\auForDec.h" />
+    <ClInclude Include="include\auGeneralRule.h" />
     <ClInclude Include="include\auGoapPlanner.h" />
+    <ClInclude Include="include\auInteraction.h" />
     <ClInclude Include="include\auPathFinder.h" />
     <ClInclude Include="include\auPlan.h" />
     <ClInclude Include="include\auPlansGraph.h" />
@@ -34,11 +40,19 @@
     <ClInclude Include="include\auPlatformTypes.h" />
     <ClInclude Include="include\auPrerequisites.h" />
     <ClInclude Include="include\auSearchGraph.h" />
+    <ClInclude Include="include\auSituation.h" />
     <ClInclude Include="include\auSTDHeaders.h" />
+    <ClInclude Include="include\auWorldSituation.h" />
     <ClInclude Include="include\auWorldState.h" />
-    <ClInclude Include="include\Situation.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="auAlgorithms.cpp" />
+    <ClCompile Include="auCondicion.cpp" />
+    <ClCompile Include="auEffect.cpp" />
+    <ClCompile Include="auInteraction.cpp" />
+    <ClCompile Include="auWorldSituation.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="GeneralRule.cpp" />
     <ClCompile Include="include\auAStar.cpp" />
     <ClCompile Include="Situation.cpp" />
     <ClCompile Include="source\auAction.cpp" />
