@@ -27,7 +27,7 @@ public:
 
   GeneralRule(
     const Vector<SituationDescriptor>& newSituations,
-    const Vector<int>& inputVariables,
+    const Vector<int> inputVariables,
     int numOfVariables
     ) :
     m_inputVariables(inputVariables),

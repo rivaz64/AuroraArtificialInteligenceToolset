@@ -3,16 +3,7 @@
 namespace auToolSeetSDK
 {
 
-bool 
-Interaction::canDoInteraction(const WorldSituation& ws, Thing character)
-{ 
-  AU_ASSERT(character.type == THING_TYPE::kCharacter);
-
-  //return ws.isTrue(m_precondicion.getSituation({character}));
-  return false;
-}
-
-void
+INTERACTION_RESULT::E
 Interaction::doInteraction(WorldSituation& ws, Vector<SPtr<Thing>> characters)
 {
   auto result = m_condicion.tryInteraction(ws,characters);
@@ -22,6 +13,7 @@ Interaction::doInteraction(WorldSituation& ws, Vector<SPtr<Thing>> characters)
   else if(result == INTERACTION_RESULT::kFailed){
     m_failed.apply(ws);
   }
+  return result;
 }
 
 }

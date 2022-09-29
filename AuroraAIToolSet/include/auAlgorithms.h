@@ -11,11 +11,18 @@ contains(const Vector<T>& v, const T& val){
 }
 
 template<class T>
-void
-erase(const Vector<T>& v, const T& val){
-  auto pos = find(v.begin(),v.end(),val);
-  v.erase(pos);
+T
+getRandom(const Vector<T>& v)
+{
+  return v[rand()%v.size()];
 }
+
+//template<class T>
+//void
+//erase(const Vector<T>& v, const T& val){
+//  auto pos = find(v.begin(),v.end(),val);
+//  v.erase(pos);
+//}
 
 template<class T>
 Vector<T>

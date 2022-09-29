@@ -42,6 +42,12 @@ struct AU_UTILITY_EXPORT Thing
   String name;
 
   void* pointer;
+
+  FORCEINLINE String
+  getString()
+  {
+    return name;
+  }
 };
 
 class AU_UTILITY_EXPORT Situation
@@ -82,6 +88,17 @@ public:
   static void
   regist(const String& id,const Vector<THING_TYPE::E>& types);
   
+  FORCEINLINE String
+  getString()
+  {
+    if(m_things.size() == 1){
+      return m_things[0]->getString() + " is " + m_id;
+    }
+    else{
+      return m_things[0]->getString() + " " + m_id + " " + m_things[1]->getString();
+    }
+  }
+
 public:
   String m_id;
 

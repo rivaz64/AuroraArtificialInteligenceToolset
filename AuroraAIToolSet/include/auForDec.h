@@ -17,4 +17,13 @@ class PlansGraph;
 struct WorldProperty;
 class WorldState;
 class Plan;
+class WorldSituation;
+class Condicion;
+class Effect;
+class GeneralRule;
+class Situation;
+class Interaction;
+class StroyTeller;
+struct Thing;
+class Character;
 }

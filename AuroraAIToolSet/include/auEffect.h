@@ -12,6 +12,16 @@ public:
 
   Effect() = default;
 
+  Effect(
+         Vector<int>&& trueSituations,
+         Vector<int>&& falseSituations,
+         Vector<CharacterChange>&& changes
+         ) :
+    m_trueSituations(trueSituations),
+    m_falseSituations(falseSituations),
+    m_changes(changes)
+  {}
+
   Effect(GeneralRule* rule,
          Vector<int>&& trueSituations,
          Vector<int>&& falseSituations,
@@ -33,6 +43,7 @@ private:
   Vector<int> m_falseSituations;
   Vector<CharacterChange> m_changes;
   
+  friend class Interaction;
 };
 
 }

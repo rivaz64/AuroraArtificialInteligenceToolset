@@ -32,6 +32,16 @@ public:
   Vector<Situation>
   getAllSimilar(const String& situationId, const Vector<SPtr<Thing>>& things);
 
+  FORCEINLINE String
+  getString()
+  {
+    String ans;
+    for(auto& situation : m_situations){
+      ans += situation.getString() + '\n';
+    }
+    return ans;
+  }
+
 private:
   Vector<Situation> m_situations;
 };

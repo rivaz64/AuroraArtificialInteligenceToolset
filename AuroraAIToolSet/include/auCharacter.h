@@ -20,8 +20,6 @@ public:
 public:
 
   Map<String,float> m_atributes;
-
-
 };
 
 }

@@ -1,2 +1,4 @@
 ﻿  test.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auInteraction.h(35,1): warning C4267: 'return': conversion from 'size_t' to 'auToolSeetSDK::uint32', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(753,9): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Sample-Test1.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\Sample-Test1.exe

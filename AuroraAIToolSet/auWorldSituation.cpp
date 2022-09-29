@@ -1,5 +1,6 @@
 #include "auWorldSituation.h"
 #include "auAlgorithms.h"
+#include "auInteraction.h"
 namespace auToolSeetSDK
 {
 
@@ -17,6 +18,7 @@ WorldSituation::getAllSimilar(const String& situationId, const Vector<SPtr<Thing
   }
   return ans;
 }
+
 
 }
 

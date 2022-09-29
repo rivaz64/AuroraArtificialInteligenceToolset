@@ -90,6 +90,9 @@
     <ClInclude Include="include\auCondicion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\auStoryTeller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\auAction.cpp">
@@ -150,6 +153,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="auStoryTeller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

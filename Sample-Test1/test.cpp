@@ -14,7 +14,7 @@
 #include "auEffect.h"
 #include "auGeneralRule.h"
 #include "auCharacter.h"
-
+#include "auStoryTeller.h"
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
 using auToolSeetSDK::PlansGraph;
@@ -39,6 +39,7 @@ using auToolSeetSDK::GeneralRule;
 using auToolSeetSDK::SituationDescriptor;
 using auToolSeetSDK::Effect;
 using auToolSeetSDK::CharacterChange;
+using auToolSeetSDK::StoryTeller;
 using namespace auToolSeetSDK::THING_TYPE;
 
 //namespace CONDICIONS
@@ -591,156 +592,209 @@ class Character{};
 class Place{};
 class Item{};
 
-TEST(ProceduralNarrativeTest, lonelyPersonFindsLove)
+//TEST(ProceduralNarrativeTest, lonelyPersonFindsLove)
+//{
+//  Character albert, juliet;
+//
+//  auto tAlbert = makeSPtr<auToolSeetSDK::Character>("albert",&albert);
+//  auto tJuliet = makeSPtr<auToolSeetSDK::Character>("juliet",&juliet);
+//  Situation::regist("loves",{kCharacter,kCharacter});
+//  WorldSituation ws;
+//
+//  Interaction fellInLove;
+//  fellInLove.m_rule = GeneralRule({SituationDescriptor("loves",{0,1}),
+//                                   SituationDescriptor("loves",{1,0})},
+//    {0,1},2);
+//  fellInLove.m_succesful = Effect(&fellInLove.m_rule,{0},{},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)});
+//  fellInLove.m_condicion = Condicion(&fellInLove.m_rule,{},{});
+//  fellInLove.doInteraction(ws,{tAlbert,tJuliet});
+//  
+//  ASSERT_TRUE(ws.isTrue(Situation("loves",{tAlbert,tJuliet})));
+//}
+//
+//TEST(ProceduralNarrativeTest, breakHeart)
+//{
+//  Character albert, juliet;
+//
+//  auto tAlbert = makeSPtr<auToolSeetSDK::Character>("albert",&albert);
+//  auto tJuliet = makeSPtr<auToolSeetSDK::Character>("juliet",&juliet);
+//
+//  Situation::regist("loves",{kCharacter,kCharacter});
+//  Situation::regist("dead",{kCharacter});
+//  Situation::regist("heartBroken",{kCharacter});
+//  WorldSituation ws;
+//  ws.add(Situation("loves",{tAlbert,tJuliet}));
+//  ws.add(Situation("loves",{tJuliet,tAlbert}));
+//  Interaction die;
+//  die.m_rule = GeneralRule({
+//      SituationDescriptor("dead",{0}),
+//      SituationDescriptor("heartBroken",{1}),
+//      SituationDescriptor("loves",{0,1}),
+//      SituationDescriptor("loves",{1,0})
+//    },
+//    {0},
+//    2
+//  );
+//  die.m_succesful = Effect(&die.m_rule,{0,1},{2,3},{CharacterChange("love",-1.f,1)});
+//  die.m_condicion = Condicion(&die.m_rule,{2,3},{});
+//  die.doInteraction(ws,{tJuliet});
+//  ASSERT_TRUE(ws.isTrue(Situation("heartBroken",{tAlbert})));
+//  ASSERT_FALSE(ws.isTrue(Situation("loves",{tJuliet,tAlbert})));
+//}
+////
+////TEST(ProceduralNarrativeTest, antTestTrue)
+////{
+////  Character _ant, _dove;
+////  Place _shore_left, _stream, _shore_right;
+////  Item _leaf;
+////  Thing ant(kCharacter,"ant",&_ant);
+////  Thing dove(kCharacter,"dove",&_dove);
+////  Thing shore_left(kPlace,"shore_left",&_shore_left);
+////  Thing shore_right(kPlace,"shore_right",&_shore_right);
+////  Thing stream(kPlace,"stream",&_stream);
+////  Thing leaf(kPlace,"leaf",&_leaf);
+////
+////  Situation::regist("thirsty",{kCharacter});
+////  Situation::regist("at",{kCharacter,kPlace});
+////  Situation::regist("above",{kCharacter,kPlace});
+////  Situation::regist("has",{kCharacter,kItem});
+////  Situation::regist("on",{kCharacter,kItem});
+////  Situation::regist("near",{kPlace,kPlace});
+////
+////  WorldSituation ws;
+////  ws.add(Situation("thirsty",{ant}));
+////  ws.add(Situation("at",{ant,shore_left}));
+////  ws.add(Situation("near",{shore_left,stream}));
+////  ws.add(Situation("near",{stream,shore_left}));
+////  ws.add(Situation("near",{shore_right,stream}));
+////  ws.add(Situation("near",{stream,shore_right}));
+////
+////  Interaction drink; 
+////  drink.m_rule = GeneralRule({
+////    SituationDescriptor("thirsty",{0}),
+////    SituationDescriptor("at",{0,1}),
+////    SituationDescriptor("near",{1,2}),
+////    SituationDescriptor("at",{0,2}),
+////    },{0,2},{0,1,2},3);
+////
+////  drink.m_effect = Effect(&drink.m_rule,{3},{0,1});
+////
+////  drink.doInteraction(ws,{ant,stream});
+////  ASSERT_FALSE(ws.isTrue(Situation("thirsty",{ant})));
+////}
+////
+////TEST(ProceduralNarrativeTest, antTestFalse)
+////{
+////  Character _ant, _dove;
+////  Place _shore_left, _stream, _shore_right;
+////  Item _leaf;
+////  Thing ant(kCharacter,"ant",&_ant);
+////  Thing dove(kCharacter,"dove",&_dove);
+////  Thing shore_left(kPlace,"shore_left",&_shore_left);
+////  Thing shore_right(kPlace,"shore_right",&_shore_right);
+////  Thing stream(kPlace,"stream",&_stream);
+////  Thing leaf(kPlace,"leaf",&_leaf);
+////
+////  Situation::regist("thirsty",{kCharacter});
+////  Situation::regist("at",{kCharacter,kPlace});
+////  Situation::regist("above",{kCharacter,kPlace});
+////  Situation::regist("has",{kCharacter,kItem});
+////  Situation::regist("on",{kCharacter,kItem});
+////  Situation::regist("near",{kPlace,kPlace});
+////
+////  WorldSituation ws;
+////  ws.add(Situation("thirsty",{ant}));
+////  ws.add(Situation("at",{ant,shore_left}));
+////
+////  Interaction drink; 
+////  drink.m_rule = GeneralRule({
+////    SituationDescriptor("thirsty",{0}),
+////    SituationDescriptor("at",{0,1}),
+////    SituationDescriptor("near",{1,2}),
+////    SituationDescriptor("at",{0,2}),
+////    },{0,2},{0,1,2},3);
+////
+////  drink.m_effect = Effect(&drink.m_rule,{3},{0,1});
+////
+////  drink.doInteraction(ws,{ant,stream});
+////  ASSERT_TRUE(ws.isTrue(Situation("thirsty",{ant})));
+////}
+////
+//TEST(ProceduralNarrativeTest, someoneIsRejected)
+//{
+//  Character _albert, _juliet, _baron;
+//
+//  auto albert = makeSPtr<auToolSeetSDK::Character>("albert",&_albert);
+//  auto juliet = makeSPtr<auToolSeetSDK::Character>("juliet",&_juliet);
+//  auto baron = makeSPtr<auToolSeetSDK::Character>("baron",&_baron);
+//
+//  Situation::regist("loves",{kCharacter,kCharacter});
+//
+//  WorldSituation ws;
+//
+//  Interaction fellInLove;
+//  fellInLove.m_rule = GeneralRule({SituationDescriptor("loves",{0,1}),
+//                                   SituationDescriptor("loves",{1,0}),
+//                                   SituationDescriptor("heartBroken",{1})},
+//    {0,1},2);
+//  fellInLove.m_succesful = Effect(&fellInLove.m_rule,{0,1},{2},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)});
+//  fellInLove.m_condicion = Condicion(&fellInLove.m_rule,{},{CharacterChange("love",-.5f,0),CharacterChange("love",-.5f,1)});
+//  fellInLove.doInteraction(ws,{albert,juliet});
+//  fellInLove.doInteraction(ws,{baron,juliet});
+//  
+//  ASSERT_TRUE(ws.isTrue(Situation("loves",{albert,juliet})));
+//  ASSERT_FALSE(ws.isTrue(Situation("loves",{baron,juliet})));
+//}
+
+TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
 {
-  Character albert, juliet;
-
-  auto tAlbert = makeSPtr<auToolSeetSDK::Character>("albert",&albert);
-  auto tJuliet = makeSPtr<auToolSeetSDK::Character>("juliet",&juliet);
-  Situation::regist("loves",{kCharacter,kCharacter});
-  WorldSituation ws;
-
-  Interaction fellInLove;
-  fellInLove.m_rule = GeneralRule({SituationDescriptor("loves",{0,1}),
-                                   SituationDescriptor("loves",{1,0})},
-    {0,1},2);
-  fellInLove.m_succesful = Effect(&fellInLove.m_rule,{0},{},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)});
-  fellInLove.m_condicion = Condicion(&fellInLove.m_rule,{},{});
-  fellInLove.doInteraction(ws,{tAlbert,tJuliet});
-  
-  ASSERT_TRUE(ws.isTrue(Situation("loves",{tAlbert,tJuliet})));
-}
-
-TEST(ProceduralNarrativeTest, breakHeart)
-{
-  Character albert, juliet;
-
-  auto tAlbert = makeSPtr<auToolSeetSDK::Character>("albert",&albert);
-  auto tJuliet = makeSPtr<auToolSeetSDK::Character>("juliet",&juliet);
-
+  auto seed = time(NULL);
+  auToolSeetSDK::print(std::to_string(seed));
+  srand(seed);
   Situation::regist("loves",{kCharacter,kCharacter});
   Situation::regist("dead",{kCharacter});
   Situation::regist("heartBroken",{kCharacter});
-  WorldSituation ws;
-  ws.add(Situation("loves",{tAlbert,tJuliet}));
-  ws.add(Situation("loves",{tJuliet,tAlbert}));
-  Interaction die;
-  die.m_rule = GeneralRule({
-      SituationDescriptor("dead",{0}),
-      SituationDescriptor("heartBroken",{1}),
-      SituationDescriptor("loves",{0,1}),
-      SituationDescriptor("loves",{1,0})
-    },
-    {0},
-    2
+
+  Character edgar, eleonora, ligeia;
+  StoryTeller st;
+
+  st.addCharacter("edgar",&edgar);
+  st.addCharacter("eleonora",&eleonora);
+  st.addCharacter("ligeia",&ligeia);
+
+  st.addInteraction(
+    "fellInLove",
+    GeneralRule(
+      {SituationDescriptor("loves",{0,1}),
+       SituationDescriptor("loves",{1,0}),
+       SituationDescriptor("heartBroken",{1}),
+      SituationDescriptor("heartBroken",{0})},
+      {0,1},2),
+    Condicion({},{},{CharacterChange("love",-.5f,1)},{CharacterChange("love",-.5f,0)}),
+    Effect({0,1},{2},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)}),
+    Effect({3},{},{})
   );
-  die.m_succesful = Effect(&die.m_rule,{0,1},{2,3},{CharacterChange("love",-1.f,1)});
-  die.m_condicion = Condicion(&die.m_rule,{2,3},{});
-  die.doInteraction(ws,{tJuliet});
-  ASSERT_TRUE(ws.isTrue(Situation("heartBroken",{tAlbert})));
-  ASSERT_FALSE(ws.isTrue(Situation("loves",{tJuliet,tAlbert})));
-}
-//
-//TEST(ProceduralNarrativeTest, antTestTrue)
-//{
-//  Character _ant, _dove;
-//  Place _shore_left, _stream, _shore_right;
-//  Item _leaf;
-//  Thing ant(kCharacter,"ant",&_ant);
-//  Thing dove(kCharacter,"dove",&_dove);
-//  Thing shore_left(kPlace,"shore_left",&_shore_left);
-//  Thing shore_right(kPlace,"shore_right",&_shore_right);
-//  Thing stream(kPlace,"stream",&_stream);
-//  Thing leaf(kPlace,"leaf",&_leaf);
-//
-//  Situation::regist("thirsty",{kCharacter});
-//  Situation::regist("at",{kCharacter,kPlace});
-//  Situation::regist("above",{kCharacter,kPlace});
-//  Situation::regist("has",{kCharacter,kItem});
-//  Situation::regist("on",{kCharacter,kItem});
-//  Situation::regist("near",{kPlace,kPlace});
-//
-//  WorldSituation ws;
-//  ws.add(Situation("thirsty",{ant}));
-//  ws.add(Situation("at",{ant,shore_left}));
-//  ws.add(Situation("near",{shore_left,stream}));
-//  ws.add(Situation("near",{stream,shore_left}));
-//  ws.add(Situation("near",{shore_right,stream}));
-//  ws.add(Situation("near",{stream,shore_right}));
-//
-//  Interaction drink; 
-//  drink.m_rule = GeneralRule({
-//    SituationDescriptor("thirsty",{0}),
-//    SituationDescriptor("at",{0,1}),
-//    SituationDescriptor("near",{1,2}),
-//    SituationDescriptor("at",{0,2}),
-//    },{0,2},{0,1,2},3);
-//
-//  drink.m_effect = Effect(&drink.m_rule,{3},{0,1});
-//
-//  drink.doInteraction(ws,{ant,stream});
-//  ASSERT_FALSE(ws.isTrue(Situation("thirsty",{ant})));
-//}
-//
-//TEST(ProceduralNarrativeTest, antTestFalse)
-//{
-//  Character _ant, _dove;
-//  Place _shore_left, _stream, _shore_right;
-//  Item _leaf;
-//  Thing ant(kCharacter,"ant",&_ant);
-//  Thing dove(kCharacter,"dove",&_dove);
-//  Thing shore_left(kPlace,"shore_left",&_shore_left);
-//  Thing shore_right(kPlace,"shore_right",&_shore_right);
-//  Thing stream(kPlace,"stream",&_stream);
-//  Thing leaf(kPlace,"leaf",&_leaf);
-//
-//  Situation::regist("thirsty",{kCharacter});
-//  Situation::regist("at",{kCharacter,kPlace});
-//  Situation::regist("above",{kCharacter,kPlace});
-//  Situation::regist("has",{kCharacter,kItem});
-//  Situation::regist("on",{kCharacter,kItem});
-//  Situation::regist("near",{kPlace,kPlace});
-//
-//  WorldSituation ws;
-//  ws.add(Situation("thirsty",{ant}));
-//  ws.add(Situation("at",{ant,shore_left}));
-//
-//  Interaction drink; 
-//  drink.m_rule = GeneralRule({
-//    SituationDescriptor("thirsty",{0}),
-//    SituationDescriptor("at",{0,1}),
-//    SituationDescriptor("near",{1,2}),
-//    SituationDescriptor("at",{0,2}),
-//    },{0,2},{0,1,2},3);
-//
-//  drink.m_effect = Effect(&drink.m_rule,{3},{0,1});
-//
-//  drink.doInteraction(ws,{ant,stream});
-//  ASSERT_TRUE(ws.isTrue(Situation("thirsty",{ant})));
-//}
-//
-TEST(ProceduralNarrativeTest, someoneIsRejected)
-{
-  Character _albert, _juliet, _baron;
 
-  auto albert = makeSPtr<auToolSeetSDK::Character>("albert",&_albert);
-  auto juliet = makeSPtr<auToolSeetSDK::Character>("juliet",&_juliet);
-  auto baron = makeSPtr<auToolSeetSDK::Character>("baron",&_baron);
+  st.addInteraction(
+    "die",
+    GeneralRule(
+      {SituationDescriptor("dead",{0}),
+       SituationDescriptor("heartBroken",{1}),
+       SituationDescriptor("loves",{0,1}),
+       SituationDescriptor("loves",{1,0})},
+      {0},2),
+    Condicion({2,3},{},{},{}),
+    Effect({0,1},{2,3},{CharacterChange("love",-1.f,1)}),
+    Effect()
+  );
 
-  Situation::regist("loves",{kCharacter,kCharacter});
-
-  WorldSituation ws;
-
-  Interaction fellInLove;
-  fellInLove.m_rule = GeneralRule({SituationDescriptor("loves",{0,1}),
-                                   SituationDescriptor("loves",{1,0})},
-    {0,1},2);
-  fellInLove.m_succesful = Effect(&fellInLove.m_rule,{0},{},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)});
-  fellInLove.m_condicion = Condicion(&fellInLove.m_rule,{},{CharacterChange("love",-.5f,0),CharacterChange("love",-.5f,1)});
-  fellInLove.doInteraction(ws,{albert,juliet});
-  fellInLove.doInteraction(ws,{baron,juliet});
+  String a;
+  for(int i = 0; i<3;++i){
+    //std::cin>>a;
+    st.step();
+  }
   
-  ASSERT_TRUE(ws.isTrue(Situation("loves",{albert,juliet})));
-  ASSERT_FALSE(ws.isTrue(Situation("loves",{baron,juliet})));
+  
+
 }
 
