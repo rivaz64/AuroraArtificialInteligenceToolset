@@ -31,11 +31,22 @@ Situation::operator==(const Situation& other) const
   if(m_id != other.m_id){
     return false;
   }
-  if(intersection(m_things,other.m_things).size() != numOfTypes){
-    return false;
-  }
-  return true;
+  return m_things == other.m_things;
 }
+
+//bool 
+//Situation::operator!=(const Situation& other) const
+//{
+//  auto numOfTypes = getNumOfTypes();
+//  if(m_id != other.m_id){
+//    return true;
+//  }
+//  if(intersection(m_things,other.m_things).size() != numOfTypes){
+//    return true;
+//  }
+//  return false;
+//}
+
 void 
 Situation::regist(const String& id, const Vector<THING_TYPE::E>& types)
 {

@@ -20,6 +20,8 @@ public:
 public:
 
   Map<String,float> m_atributes;
+
+  Map<String,float> m_pasions;
 };
 
 }

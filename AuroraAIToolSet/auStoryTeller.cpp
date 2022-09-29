@@ -28,5 +28,24 @@ StoryTeller::step()
   print(ws.getString());
 }
 
+void
+StoryTeller::playerAction(const String& interaction, const Vector<String>& names)
+{
+  Vector<SPtr<Thing>> characters;
+  for(auto name : names){
+    characters.push_back(m_characters[at(m_names,name)]);
+  }
+
+  auto i = m_interactions[at(m_interactionIds,interaction)];
+
+  i->doInteraction(ws, characters);
+
+  print(i->getString());
+
+  print(ws.getString());
+}
+
+
+
 }
 

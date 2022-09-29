@@ -2,7 +2,7 @@
 
 #include "auPrerequisites.h"
 #include "auSituation.h" 
-
+#include "auAlgorithms.h"
 namespace auToolSeetSDK
 {
 
@@ -12,7 +12,10 @@ public:
   FORCEINLINE void
   add(const Situation& newSituation)
   {
-    m_situations.push_back(newSituation);
+    if(!contains(m_situations,newSituation)){
+      m_situations.push_back(newSituation);
+    }
+    
   }
   
   FORCEINLINE void
@@ -36,7 +39,7 @@ public:
   getString()
   {
     String ans;
-    for(auto& situation : m_situations){
+    for(auto situation : m_situations){
       ans += situation.getString() + '\n';
     }
     return ans;

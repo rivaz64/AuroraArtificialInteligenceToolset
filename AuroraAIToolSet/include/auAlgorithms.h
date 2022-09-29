@@ -17,6 +17,11 @@ getRandom(const Vector<T>& v)
   return v[rand()%v.size()];
 }
 
+template<class T>
+int
+at(const Vector<T>& v, const T& val){
+  return find(v.begin(),v.end(),val) - v.begin();
+}
 //template<class T>
 //void
 //erase(const Vector<T>& v, const T& val){

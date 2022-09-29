@@ -60,6 +60,9 @@ public:
   bool 
   operator==(const Situation& other) const;
 
+  bool 
+  operator!=(const Situation& other) const;
+
   FORCEINLINE SIZE_T 
   getNumOfTypes() const
   {

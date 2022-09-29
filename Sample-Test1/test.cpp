@@ -15,6 +15,7 @@
 #include "auGeneralRule.h"
 #include "auCharacter.h"
 #include "auStoryTeller.h"
+#include "auAlgorithms.h"
 using auToolSeetSDK::WorldState;
 using auToolSeetSDK::Action;
 using auToolSeetSDK::PlansGraph;
@@ -40,6 +41,7 @@ using auToolSeetSDK::SituationDescriptor;
 using auToolSeetSDK::Effect;
 using auToolSeetSDK::CharacterChange;
 using auToolSeetSDK::StoryTeller;
+using auToolSeetSDK::print;
 using namespace auToolSeetSDK::THING_TYPE;
 
 //namespace CONDICIONS
@@ -748,19 +750,22 @@ class Item{};
 
 TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
 {
-  auto seed = time(NULL);
+  auto seed = 1664477564;//time(NULL);
   auToolSeetSDK::print(std::to_string(seed));
   srand(seed);
   Situation::regist("loves",{kCharacter,kCharacter});
   Situation::regist("dead",{kCharacter});
   Situation::regist("heartBroken",{kCharacter});
 
-  Character edgar, eleonora, ligeia;
+  Character edgar, eleonora, ligeia,player;
   StoryTeller st;
 
+  
   st.addCharacter("edgar",&edgar);
   st.addCharacter("eleonora",&eleonora);
   st.addCharacter("ligeia",&ligeia);
+  st.addCharacter("player",&player);
+  
 
   st.addInteraction(
     "fellInLove",
@@ -768,10 +773,13 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
       {SituationDescriptor("loves",{0,1}),
        SituationDescriptor("loves",{1,0}),
        SituationDescriptor("heartBroken",{1}),
-      SituationDescriptor("heartBroken",{0})},
+       SituationDescriptor("heartBroken",{0}),
+       SituationDescriptor("dead",{0}),
+       SituationDescriptor("dead",{1})},
+
       {0,1},2),
-    Condicion({},{},{CharacterChange("love",-.5f,1)},{CharacterChange("love",-.5f,0)}),
-    Effect({0,1},{2},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)}),
+    Condicion({},{5,4},{CharacterChange("love",-.5f,1)},{CharacterChange("love",-.5f,0)}),
+    Effect({0,1},{2,3},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)}),
     Effect({3},{},{})
   );
 
@@ -784,14 +792,49 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
        SituationDescriptor("loves",{1,0})},
       {0},2),
     Condicion({2,3},{},{},{}),
-    Effect({0,1},{2,3},{CharacterChange("love",-1.f,1)}),
+    Effect({0,1},{2,3},{CharacterChange("love",-1.f,1),CharacterChange("love",-1.f,0)}),
+    Effect()
+  );
+
+  st.addInteraction(
+    "revive",
+    GeneralRule(
+      {SituationDescriptor("dead",{0})},
+      {0},1),
+    Condicion({0},{},{},{}),
+    Effect({},{0},{}),
     Effect()
   );
 
   String a;
-  for(int i = 0; i<3;++i){
-    //std::cin>>a;
+  String interaction;
+
+  for(int i = 0; i<5;++i){
     st.step();
+
+    std::cin>>a;
+
+    while(!auToolSeetSDK::contains(st.m_interactionIds,a)){
+      print("this is no interaction");
+      std::cin>>a;
+    }
+    interaction = a;
+    auto id = auToolSeetSDK::at(st.m_interactionIds,a);
+    auto n = st.m_interactions[id]->getNumOfAtributes()-1;
+    Vector<String> chars = {"player"};
+
+    for(int i = 0; i<n; ++i){
+      std::cin>>a;
+      while(!auToolSeetSDK::contains(st.m_names,a)){
+        print("this is not a character");
+        std::cin>>a;
+      }
+      chars.push_back(a);
+
+    }
+
+    st.playerAction(interaction,chars);
+    //st.m_interactions[id]->doInteraction(st.ws, chars);
   }
   
   
