@@ -760,11 +760,11 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
   Character edgar, eleonora, ligeia,player;
   StoryTeller st;
 
-  
+  st.addCharacter("player",&player);
   st.addCharacter("edgar",&edgar);
   st.addCharacter("eleonora",&eleonora);
   st.addCharacter("ligeia",&ligeia);
-  st.addCharacter("player",&player);
+  
   
 
   st.addInteraction(

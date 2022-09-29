@@ -1,11 +1,4 @@
-﻿  auStoryTeller.cpp
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auInteraction.h(35,1): warning C4267: 'return': conversion from 'size_t' to 'auToolSeetSDK::uint32', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\auStoryTeller.cpp(17,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auAlgorithms.h(23,38): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\auStoryTeller.cpp(36): message : see reference to function template instantiation 'int auToolSeetSDK::at<auToolSeetSDK::String>(const std::vector<auToolSeetSDK::String,std::allocator<auToolSeetSDK::String>> &,const T &)' being compiled
-          with
-          [
-              T=auToolSeetSDK::String
-          ]
-     Creating library C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.lib and object C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.exp
+﻿  auInteraction.cpp
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auInteraction.h(38,1): warning C4267: 'return': conversion from 'size_t' to 'auToolSeetSDK::uint32', possible loss of data
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\auInteraction.cpp(40): warning C4715: 'auToolSeetSDK::Interaction::waitForPlayersResponse': not all control paths return a value
   AuroraAIToolSet.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.dll

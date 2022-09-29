@@ -14,7 +14,12 @@ StoryTeller::step()
     uint32 n = interaction->getNumOfAtributes();
 
     Vector<SPtr<Thing>> characters;
-    for(auto i = 0; i<n; ++i){
+
+    auto character = getRandom(m_characters);
+    while(contains(characters,character) || character->name == "player") character = getRandom(m_characters);
+    characters.push_back(character);
+
+    for(auto i = 1; i<n; ++i){
       auto character = getRandom(m_characters);
       while(contains(characters,character)) character = getRandom(m_characters);
       characters.push_back(character);
@@ -23,9 +28,7 @@ StoryTeller::step()
     result = interaction->doInteraction(ws,characters);
   } while (result == INTERACTION_RESULT::kImposible);
   
-  print(interaction->getString());
-
-  print(ws.getString());
+  represent(interaction);
 }
 
 void
@@ -40,7 +43,13 @@ StoryTeller::playerAction(const String& interaction, const Vector<String>& names
 
   i->doInteraction(ws, characters);
 
-  print(i->getString());
+  represent(i);
+}
+
+void 
+StoryTeller::represent(SPtr<Interaction> interaction)
+{
+  print(interaction->getString());
 
   print(ws.getString());
 }

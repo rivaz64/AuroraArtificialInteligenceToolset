@@ -29,6 +29,9 @@ public:
   INTERACTION_RESULT::E 
   doInteraction(WorldSituation& ws, Vector<SPtr<Thing>> characters);
 
+  INTERACTION_RESULT::E 
+  waitForPlayersResponse(String& name);
+
   FORCEINLINE uint32
   getNumOfAtributes()
   {

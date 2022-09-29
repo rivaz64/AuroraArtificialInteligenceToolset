@@ -29,7 +29,8 @@ public:
     m_interactions.push_back(makeSPtr<Interaction>(id,rule,condicion,succesful,failed));
   }
 
-
+  void
+  represent(SPtr<Interaction> interaction);
 
 public:
 
