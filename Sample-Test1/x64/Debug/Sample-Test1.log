@@ -1,8 +1,8 @@
 ﻿  test.cpp
 C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auInteraction.h(38,1): warning C4267: 'return': conversion from 'size_t' to 'auToolSeetSDK::uint32', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(826,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(839,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auAlgorithms.h(23,38): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(822): message : see reference to function template instantiation 'int auToolSeetSDK::at<std::string>(const std::vector<std::string,std::allocator<std::string>> &,const T &)' being compiled
+C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\Sample-Test1\test.cpp(835): message : see reference to function template instantiation 'int auToolSeetSDK::at<std::string>(const std::vector<std::string,std::allocator<std::string>> &,const T &)' being compiled
           with
           [
               T=std::string

@@ -1,4 +1,2 @@
-﻿  auInteraction.cpp
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\include\auInteraction.h(38,1): warning C4267: 'return': conversion from 'size_t' to 'auToolSeetSDK::uint32', possible loss of data
-C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\AuroraAIToolSet\auInteraction.cpp(40): warning C4715: 'auToolSeetSDK::Interaction::waitForPlayersResponse': not all control paths return a value
+﻿  auEffect.cpp
   AuroraAIToolSet.vcxproj -> C:\Users\roriv\Documents\GitHub\AuroraArtificialInteligenceToolset\x64\Debug\AuroraAIToolSet.dll

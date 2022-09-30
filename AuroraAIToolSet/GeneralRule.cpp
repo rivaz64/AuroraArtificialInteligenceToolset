@@ -41,7 +41,7 @@ Vector<SituationDescriptor>
 GeneralRule::getAllSituationsWithVariable(int variableId)
 {
   Vector<SituationDescriptor> ans;
-  for(auto& situation : m_precondicions){
+  for(auto& situation : m_situationsForSolve){
     if(contains(m_situations[situation].variables,variableId)){
       ans.push_back(m_situations[situation]);
     }
@@ -60,13 +60,12 @@ GeneralRule::findUnknownValues(WorldSituation& ws)
 }
 
 bool 
-GeneralRule::solve(WorldSituation& ws, Vector<SPtr<Thing>>& things,Vector<int>& precondicions)
+GeneralRule::solve(WorldSituation& ws, Vector<SPtr<Thing>>& things)
 {
   int inputs = m_inputVariables.size();
   AU_ASSERT(things.size() == inputs);
   m_finalThings.resize(m_numOfVariables);
   m_foundValues = m_inputVariables;
-  m_precondicions = precondicions;
   for(int i = 0; i<inputs; ++i){
     m_finalThings[m_inputVariables[i]] = things[i];
   }
@@ -82,22 +81,39 @@ GeneralRule::solve(WorldSituation& ws, Vector<SPtr<Thing>>& things,Vector<int>& 
   return m_unknownValues.size()==0;
 }
 
-Vector<Situation>
-GeneralRule::getSolvedSituations(const Vector<int>& situations)
+bool
+GeneralRule::getSolvedSituation(int situationId, Situation& situation)
 {
-  Vector<Situation> ans;
-  for(auto situation : situations){
-    Situation s;
-    s.m_id = m_situations[situation].id;
+  situation.m_id = m_situations[situationId].id;
 
-    for(auto thing : m_situations[situation].variables){
-      s.m_things.push_back(m_finalThings[thing]);
+  for(auto thing : m_situations[situationId].variables){
+    if(!contains(m_unknownValues,thing)){
+      situation.m_things.push_back(m_finalThings[thing]);
     }
-
-    ans.push_back(s);
+    else{
+      return false;
+    }
   }
-  return ans;
+  return true;
 }
+
+
+//Vector<Situation>
+//GeneralRule::getSolvedSituations(const Vector<int>& situations)
+//{
+//  Vector<Situation> ans;
+//  for(auto situation : situations){
+//    Situation s;
+//    s.m_id = m_situations[situation].id;
+//
+//    for(auto thing : m_situations[situation].variables){
+//      s.m_things.push_back(m_finalThings[thing]);
+//    }
+//
+//    ans.push_back(s);
+//  }
+//  return ans;
+//}
 
 }
 

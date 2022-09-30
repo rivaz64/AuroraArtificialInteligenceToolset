@@ -776,10 +776,9 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
        SituationDescriptor("heartBroken",{0}),
        SituationDescriptor("dead",{0}),
        SituationDescriptor("dead",{1})},
-
-      {0,1},2),
-    Condicion({},{5,4},{CharacterChange("love",-.5f,1)},{CharacterChange("love",-.5f,0)}),
-    Effect({0,1},{2,3},{CharacterChange("love",1.f,0),CharacterChange("love",1.f,1)}),
+      {0,1},{},2),
+    Condicion({},{5,4},{CharacterChange("love",0,1,-1.5f)},{CharacterChange("love",1,0,-1.5f)}),
+    Effect({0,1},{2,3},{CharacterChange("love",0,1,1.0f),CharacterChange("love",1,0,1.0f)}),
     Effect({3},{},{})
   );
 
@@ -790,9 +789,9 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
        SituationDescriptor("heartBroken",{1}),
        SituationDescriptor("loves",{0,1}),
        SituationDescriptor("loves",{1,0})},
-      {0},2),
-    Condicion({2,3},{},{},{}),
-    Effect({0,1},{2,3},{CharacterChange("love",-1.f,1),CharacterChange("love",-1.f,0)}),
+      {0},{2,3},2),
+    Condicion({},{},{},{}),
+    Effect({0,1},{2,3},{CharacterChange("love",0,1,-1.f),CharacterChange("love",1,0,-1.f)}),
     Effect()
   );
 
@@ -800,9 +799,23 @@ TEST(ProceduralNarrativeTest, aHearthBreakIsHealed)
     "revive",
     GeneralRule(
       {SituationDescriptor("dead",{0})},
-      {0},1),
+      {0},{},1),
     Condicion({0},{},{},{}),
     Effect({},{0},{}),
+    Effect()
+  );
+
+  st.addInteraction(
+    "kill",
+    GeneralRule(
+      {SituationDescriptor("dead",{1}),
+       SituationDescriptor("heartBroken",{2}),
+       SituationDescriptor("loves",{2,1}),
+       SituationDescriptor("loves",{1,2})},
+
+      {0,1},{2,3},3),
+    Condicion({},{0},{},{CharacterChange("love",0,1,-1.f)}),
+    Effect({0,1},{2,3},{CharacterChange("love",2,0,-1.f)}),
     Effect()
   );
 
